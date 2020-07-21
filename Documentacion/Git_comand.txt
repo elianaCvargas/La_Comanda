@@ -1,0 +1,41 @@
+Git command lines
+
+Prepear changes to push
+- $ git add [file] //sube solo un archivo
+- $ git add . //agrega todo ignorando el git ignore
+
+- $ git reset // remueve el ad
+
+Push changes to branch
+- $ git commit -m "add README"
+- $ git push origin develop
+
+Change branch
+- $ git checkout master //cambia de branch, si no existe lo crea
+- $ git checkout develop
+
+Create branch from source branch
+- git checkout -b [new branch] [source branch]
+
+If you wish to "undo" all uncommitted changes simply run:
+- git stash
+- git stash drop
+
+Pull agresivo
+- $ git pull origin other-branch
+
+Pull seguro
+- $ git fetch origin other-branch 
+- $ git merge other-branch
+
+Update branch
+$ git pull
+- ahora tenes develop al taco
+- te tenes q mover a tu branch q uqeres actualizar, - supongamos q se llama toti
+$ git checkout toti
+- sin el -b, no estas creando una nueva
+- ahora estas parado en toti
+- queres actualizar, lo q queres hacer es mergear los cambios de develop a toti
+- es como un PR q targetea toti
+$ git merge develop
+- trae a tu branch actual, toti, todo lo de develop
