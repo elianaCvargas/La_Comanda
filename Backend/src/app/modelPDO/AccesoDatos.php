@@ -18,6 +18,7 @@ class AccesoDatos
             die();
         }
     }
+   
  
     public function RetornarConsulta($sql)
     { 
