@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
-namespace PDO\Enum;
+namespace Persistence\Enum;
 
 
 abstract class Enum_RolesUsuarios{

@@ -1,29 +1,27 @@
 <?php
 namespace App\Models\PDO;
-use App\Models\PDO\cd;
-
-include_once __DIR__ . '/cd.php';
+use Model\Cliente;
+use Persistence\ClienteRepository;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
+include_once __DIR__ . '/../../Model/cliente.php';
+include_once __DIR__ . '/../../Persistence/ClienteRepository.php';
 
-class cdControler
+
+class UsuarioController
 {
  	public function Bienvenida($request, $response, $args) {
       $response->getBody()->write("GET => Bienvenido!!! ,a SlimFramework");
     
     return $response;
     }
-    
-     public function TraerTodos($request, $response, $args) {
-        $todosLosCds=cd::TraerTodoLosCds();
-        $newResponse = $response->withJson($todosLosCds, 200);  
-        return $newResponse;
-    }
 
-    public function TraerUno($request, $response, $args) {
-     	//complete el codigo
+    public static function TraerUno($request, $response, $args) {
+       //complete el codigo
+      $user = new Cliente("Javier@jave", "Manco", "Arabe", 1);
+      ClienteRepository::create($user);
      	$newResponse = $response->withJson("sin completar", 200);  
     	return $newResponse;
     }

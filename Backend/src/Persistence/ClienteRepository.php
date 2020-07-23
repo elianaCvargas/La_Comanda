@@ -1,5 +1,10 @@
 <?php
+namespace Persistence;
+
 use Model\Usuario;
+use Persistence\db;
+include_once __DIR__ . '/../../src/Persistence/db.php';
+
 class ClienteRepository extends db{
 	
 	// private function view_users(){
@@ -19,18 +24,21 @@ class ClienteRepository extends db{
 	// 	return $this->view_users();
 	// }
 
-	private function Create(Usuario $data){
+	public static function create(Usuario $user){
 		try {
-			$SQL = 'INSERT INTO usuarios (UserName, Nombre, Apellido,RolUsuarioID, RolEmpleadoID) VALUES ("",?,?)';
-			$result = $this->connect()->prepare($SQL);
+			var_dump($user);
+			$SQL = 'INSERT INTO usuarios (Username, Nombre, Apellido,RolUsuarioID, RolEmpleadoID) VALUES (?,?,?,?,?)';
+			$result = db::connect()->prepare($SQL);
 			$result->execute(array(
-									$data['name'],
-									$data['last_name'],
-									$data['email']
+									$user->getUsername(),
+									$user->getFirstName(),
+									$user->getLastName(),
+									$user->getUserRol(),
+									$user->getEmpleadoRol()
 									)
 							);			
 		} catch (Exception $e) {
-			die('Error Administrator(register_users) '.$e->getMessage());
+			die('Error ClienteRepository(Create) '.$e->getMessage());
 		} finally{
 			$result = null;
 		}

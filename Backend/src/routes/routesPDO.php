@@ -3,36 +3,24 @@
 use Slim\App;
 use Slim\Http\Request;
 use Slim\Http\Response;
-use App\Models\PDO\cd;
-use App\Models\PDO\cdControler;
+use App\Models\PDO\UsuarioController;
 
+// $routes = require __DIR__ . '/../src/routes/routesPDO.php';
+include_once __DIR__ . '/../../src/App/modelPDO/UsuarioController.php';
+// include_once __DIR__ . '/../../src/app/modelPDO/cd.php';
 
-
-include_once __DIR__ . '/../../src/app/modelPDO/cdControler.php';
-include_once __DIR__ . '/../../src/app/modelPDO/cd.php';
-
-
+// require_once "../app/modelPDO/UsuarioController.php";
 
 return function (App $app) {
     $container = $app->getContainer();  
 
     
-    $app->group('/cdPDO', function () {   
+    $app->group('/user', function ($app) {   
 
-       $this->get('/', function ($request, $response, $args) {
-
-            return  json_encode(cd::TraerTodoLosCds());
-            $todosLosCds=cd::TraerTodoLosCds();
-            $newResponse = $response->withJson($todosLosCds, 200);  
-            return $newResponse;
-        });
-
+        $this->post('',UsuarioController::class . ':TraerUno');   
+            
+        // $todosLosCds=cd::TraerTodoLosCds();
+        // $newResponse = $response->withJson($todosLosCds, 200);  
+        // return $newResponse;
     });
-   
-    $app->group('/cdPDO2', function () {   
-
-        $this->get('/',cdControler::class . ':TraerTodos');   
-
-    });
-
 };

@@ -12,10 +12,12 @@ abstract class Usuario implements JsonSerializable
     private $username;
     private $firstName;
     private $lastName;
+    private $userRol;
+    private $empleadoRol;
 
-    public function __construct($id, $username, $firstName, $lastName)
+    public function __construct($username, $firstName, $lastName)
     {
-        $this->id = $id;
+        $this->id = 0;
         $this->username = strtolower($username);
         $this->firstName = ucfirst($firstName);
         $this->lastName = ucfirst($lastName);
@@ -24,6 +26,26 @@ abstract class Usuario implements JsonSerializable
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getUserRol(): ?int
+    {
+        return $this->userRol;
+    }
+
+    public function getEmpleadoRol(): ?int
+    {
+        return $this->empleadoRol;
+    }
+
+    protected function setUserRol(int $rolId) 
+    {
+        $this->userRol = $rolId;
+    }
+
+    protected function setEmpleadoRol(int $rolId) 
+    {
+        $this->empleadoRol = $rolId;
     }
 
     public function getUsername(): string

@@ -1,19 +1,22 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Model;
+namespace Model;
 
 use JsonSerializable;
+use Persistence\Enum\Enum_RolesUsuarios;
+include_once __DIR__ . '/../../src/Model/usuario.php';
+include_once __DIR__ . '/../../src/Persistence/Enum/RolesUsuariosEnum.php';
 
-class Cliente implements Usuario
+class Cliente extends Usuario
 {
-
     private $numeroCliente;
     
-    public function __construct($numeroCliente)
+    public function __construct($username, $firstName, $lastName, $numeroCliente)
     {
+        parent::__construct($username, $firstName, $lastName);
+        parent::setUserRol(Enum_RolesUsuarios::Cliente);
         $this->numeroCliente = $numeroCliente;
-
     }
 
     public function getId(): ?int

@@ -1,12 +1,12 @@
 <?php
-/*
-	CRUD creado por Oscar Amado
-	Contacto: oscarfamado@gmail.com
-*/
+namespace Persistence;
+
+use PDO;
+
 class db{	
-	protected function connect(){
+	protected static function connect(){
 		try {
-			$connect = new PDO('mysql:host=localhost;dbname=crud;charset=utf8;','root','');
+			$connect = new PDO('mysql:host=localhost;dbname=la_comanda;charset=utf8;','root','');
 			$connect->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
 			return $connect;	
 		} catch (Exception $e) {
