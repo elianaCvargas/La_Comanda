@@ -1,11 +1,11 @@
 <?php
-namespace Persistence;
+namespace Db;
 
 use Model\Usuario;
-use Persistence\db;
-include_once __DIR__ . '/../../src/Persistence/db.php';
+use Db\db;
+include_once __DIR__ . '/../../src/Db/db.php';
 
-class ClienteRepository extends db{
+class ClienteDb extends db{
 	
 	// private function view_users(){
 	// 	try {
@@ -26,7 +26,6 @@ class ClienteRepository extends db{
 
 	public static function create(Usuario $user){
 		try {
-			var_dump($user);
 			$SQL = 'INSERT INTO usuarios (Username, Nombre, Apellido,RolUsuarioID, RolEmpleadoID) VALUES (?,?,?,?,?)';
 			$result = db::connect()->prepare($SQL);
 			$result->execute(array(

@@ -1,5 +1,5 @@
 <?php
-namespace Persistence;
+namespace Db;
 
 use PDO;
 

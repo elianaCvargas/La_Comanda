@@ -5,7 +5,7 @@ namespace App\Model;
 
 use JsonSerializable;
 
-class Socio implements Usuario
+class Socio 
 {
 
 }

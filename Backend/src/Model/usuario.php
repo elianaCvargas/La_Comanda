@@ -63,6 +63,20 @@ abstract class Usuario implements JsonSerializable
         return $this->lastName;
     }
 
+    public function setNombre($nombre) 
+    {
+        $this->firstName = $nombre;
+    }
+    public function setApellido(int $apellido) 
+    {
+        $this->lastName = $apellido;
+    }
+    public function setUsuario(int $usuario) 
+    {
+        $this->username = $usuario;
+    }
+
+
     public function jsonSerialize()
     {
         return [
