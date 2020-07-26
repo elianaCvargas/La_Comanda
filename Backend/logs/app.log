@@ -241,3 +241,12 @@
 [2020-07-26 06:20:45] UTN FRA LOGGER.INFO: metodo=POST, URI=http%3A%2F%2Flocalhost%3A8080%2FLa_Comanda%2FBackend%2Fpublic, RUTA=mozo, autoridad=localhost%3A8080 [] {"uid":"81766a3"}
 [2020-07-26 06:26:40] UTN FRA LOGGER.INFO: metodo=POST, URI=http%3A%2F%2Flocalhost%3A8080%2FLa_Comanda%2FBackend%2Fpublic, RUTA=mozo, autoridad=localhost%3A8080 [] {"uid":"21c8e7e"}
 [2020-07-26 06:30:27] UTN FRA LOGGER.INFO: metodo=POST, URI=http%3A%2F%2Flocalhost%3A8080%2FLa_Comanda%2FBackend%2Fpublic, RUTA=mozo, autoridad=localhost%3A8080 [] {"uid":"a69afd2"}
+[2020-07-26 06:34:55] UTN FRA LOGGER.INFO: metodo=POST, URI=http%3A%2F%2Flocalhost%3A8080%2FLa_Comanda%2FBackend%2Fpublic, RUTA=mozo, autoridad=localhost%3A8080 [] {"uid":"4846b74"}
+[2020-07-26 06:35:29] UTN FRA LOGGER.INFO: metodo=POST, URI=http%3A%2F%2Flocalhost%3A8080%2FLa_Comanda%2FBackend%2Fpublic, RUTA=mozo, autoridad=localhost%3A8080 [] {"uid":"e9c826a"}
+[2020-07-26 06:48:59] UTN FRA LOGGER.INFO: metodo=POST, URI=http%3A%2F%2Flocalhost%3A8080%2FLa_Comanda%2FBackend%2Fpublic, RUTA=mozo, autoridad=localhost%3A8080 [] {"uid":"da90767"}
+[2020-07-26 06:50:58] UTN FRA LOGGER.INFO: metodo=POST, URI=http%3A%2F%2Flocalhost%3A8080%2FLa_Comanda%2FBackend%2Fpublic, RUTA=mozo, autoridad=localhost%3A8080 [] {"uid":"4f304ad"}
+[2020-07-26 06:51:13] UTN FRA LOGGER.INFO: metodo=POST, URI=http%3A%2F%2Flocalhost%3A8080%2FLa_Comanda%2FBackend%2Fpublic, RUTA=mozo, autoridad=localhost%3A8080 [] {"uid":"bab04f7"}
+[2020-07-26 06:59:51] UTN FRA LOGGER.INFO: metodo=POST, URI=http%3A%2F%2Flocalhost%3A8080%2FLa_Comanda%2FBackend%2Fpublic, RUTA=socio, autoridad=localhost%3A8080 [] {"uid":"aff77f3"}
+[2020-07-26 07:00:35] UTN FRA LOGGER.INFO: metodo=POST, URI=http%3A%2F%2Flocalhost%3A8080%2FLa_Comanda%2FBackend%2Fpublic, RUTA=socio, autoridad=localhost%3A8080 [] {"uid":"909fbc3"}
+[2020-07-26 07:01:26] UTN FRA LOGGER.INFO: metodo=POST, URI=http%3A%2F%2Flocalhost%3A8080%2FLa_Comanda%2FBackend%2Fpublic, RUTA=socio, autoridad=localhost%3A8080 [] {"uid":"6dd18e5"}
+[2020-07-26 07:01:57] UTN FRA LOGGER.INFO: metodo=POST, URI=http%3A%2F%2Flocalhost%3A8080%2FLa_Comanda%2FBackend%2Fpublic, RUTA=socio, autoridad=localhost%3A8080 [] {"uid":"3a8a2f8"}
