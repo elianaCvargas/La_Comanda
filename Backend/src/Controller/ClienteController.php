@@ -21,7 +21,7 @@ class ClienteController extends BaseController
 {
     public function Crear($request, $response, $args) {
       $datosArray = $request->getParsedBody();
-      if($this->ValidateRequest($datosArray, ["nombre", "apellido", "username"]))
+      if($this->ValidateCreateRequest($datosArray, ["nombre", "apellido", "username"]))
       {
         $user = json_encode($datosArray);
         $this->ValidarDatosEntrada($datosArray);

@@ -22,10 +22,8 @@ class SocioController extends BaseController
   {
     try {
       $datosArray = $request->getParsedBody();
-      var_dump("Datos array: ");
-      var_dump($datosArray);
       if (
-        $this->ValidateRequest($datosArray, ["nombre", "apellido", "username"])
+        $this->ValidateCreateRequest($datosArray, ["nombre", "apellido", "username"])
       ) {
         $user = json_encode($datosArray);
         $empleadoDto = UsuarioDtoMapping::ToSocioDto($user);
@@ -33,6 +31,27 @@ class SocioController extends BaseController
         $empleadoLogic->Crear($empleadoDto);
       } else {
         echo "Faltan definir los campos";
+      }
+    } catch (Exception $e) {
+      $response->withJson("Algun problema no conocido");
+    } catch (ApplicationException $ae) {
+     echo $ae->Message();
+    }
+  }
+
+  public function Modificar($request, $response, $args)
+  {
+    try {
+      $datosArray = $request->getParsedBody();
+      if (
+        $this->ValidateModifyRequest($datosArray, "id", ["nombre", "apellido", "username"])
+      ) {
+        $user = json_encode($datosArray);
+        $empleadoDto = UsuarioDtoMapping::ToSocioDto($user);
+        $empleadoLogic = new SocioLogic();
+        $empleadoLogic->Modificar($empleadoDto);
+      } else {
+        echo "Debe definir al menos un campo para modificar y ingresar un id";
       }
     } catch (Exception $e) {
       $response->withJson("Algun problema no conocido");

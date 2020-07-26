@@ -10,9 +10,9 @@ include_once __DIR__ . '/../../src/Model/usuario.php';
 
 class Socio extends Usuario
 {
-  public function __construct($nombre, $apellido, $username)
+  public function __construct($id, $nombre, $apellido, $username)
   {
-      parent::__construct($nombre, $apellido, $username);
+      parent::__construct($id ? $id : 0, $nombre, $apellido, $username);
       parent::setUserRol(Enum_RolesUsuarios::Socio);
   }
 }

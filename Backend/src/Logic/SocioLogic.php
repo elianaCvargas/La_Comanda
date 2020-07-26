@@ -18,7 +18,7 @@ class SocioLogic
   public function Crear(SocioDto $dto)
   {
     $errores = [];
-    $erroresUsuario = ValidationHelper::ValidarUsuarioRequest($dto->nombre, $dto->apellido, $dto->username);
+    $erroresUsuario = ValidationHelper::ValidarCreateUsuarioRequest($dto->nombre, $dto->apellido, $dto->username);
 
     if (count($erroresUsuario) > 0) {
       foreach($errores as $error)
@@ -31,5 +31,23 @@ class SocioLogic
 
     $usuarioNuevo = UsuarioMapping::ToSocio($dto);
     UsuarioDb::createSocio($usuarioNuevo);
+  }
+
+  public function Modificar(SocioDto $dto)
+  {
+    $errores = [];
+    $erroresUsuario = ValidationHelper::ValidarModifyUsuarioRequest($dto->id, $dto->nombre, $dto->apellido, $dto->username);
+
+    if (count($erroresUsuario) > 0) {
+      foreach($errores as $error)
+      {
+        echo $error."\n";
+      }
+
+      return;
+    }
+
+    $usuarioNuevo = UsuarioMapping::ToSocio($dto);
+    UsuarioDb::modifySocio($usuarioNuevo);
   }
 }

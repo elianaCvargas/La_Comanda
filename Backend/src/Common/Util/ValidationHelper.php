@@ -10,7 +10,7 @@ include_once __DIR__ . '/../Dto/EmpleadoDto.php';
 
 abstract class ValidationHelper
 {
-    public static function ValidarEmpleadoRequest(EmpleadoDto $dto)
+    public static function ValidarCreateEmpleadoRequest(EmpleadoDto $dto)
     {
         $errores = [];
       
@@ -32,14 +32,13 @@ abstract class ValidationHelper
       return $errores;
     }
 
-    public static function ValidarUsuarioRequest($nombre, $apellido, $username) 
+    public static function ValidarCreateUsuarioRequest($nombre, $apellido, $username) 
     {
         $errores = [];
 
         if($nombre === "" || $nombre === null)
         {
            array_push( $errores, "Debe ingresar un nombre.");
-            return false;
         }
 
         if($apellido === "" || $apellido === null)
@@ -51,6 +50,22 @@ abstract class ValidationHelper
             array_push( $errores, "Debe ingresar un telefono.");
         }
 
+
+      return $errores;
+    }
+
+    public static function ValidarModifyUsuarioRequest($id, $nombre, $apellido, $username) 
+    {
+        $errores = [];
+
+        if($id === "") {
+            array_push( $errores, "Debe ingresar un id.");
+        }
+
+        if($nombre === "" && $apellido === "" && $username === "")
+        {
+           array_push( $errores, "Debe modificar al menos un campo.");
+        }
 
       return $errores;
     }

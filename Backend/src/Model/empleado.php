@@ -14,18 +14,13 @@ class Empleado extends Usuario
     private $rolEmpleado;
     // private $dni;
     // private $telefono;
-    public function __construct($nombre, $apellido, $rolEmpleado, $username)
+    public function __construct($id, $nombre, $apellido, $rolEmpleado, $username)
     {
-        parent::__construct($nombre, $apellido, $username);
+        parent::__construct($id, $nombre, $apellido, $username);
         parent::setUserRol(Enum_RolesUsuarios::Empleado);
         // $this->dni = $dni;
         // $this->telefono = $telefono;
         $this->rolEmpleado = $rolEmpleado;
-    }
-
-    public function getId(): ?int
-    {
-        return $this->numeroCliente;
     }
 
     public function jsonSerialize()

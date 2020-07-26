@@ -20,8 +20,8 @@ class UsuarioLogic
 {
 //   public function Crear(EmpleadoDto $dto)
 //   {
-//     $erroresEmpleado =  ValidationHelper::ValidarEmpleadoRequest($dto->rolEmpleado);
-//     $erroresUsuario = ValidationHelper::ValidarUsuarioRequest($dto);
+//     $erroresEmpleado =  ValidationHelper::ValidarCreateEmpleadoRequest($dto->rolEmpleado);
+//     $erroresUsuario = ValidationHelper::ValidarCreateUsuarioRequest($dto);
 
 //     if (count($erroresUsuario) > 0 || $erroresEmpleado > 0) {
 //       $errores = array_merge($erroresUsuario, $erroresEmpleado);
