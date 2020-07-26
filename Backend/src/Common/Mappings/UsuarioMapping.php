@@ -2,17 +2,14 @@
 namespace Common\Mappings;
 
 use Common\Dto;
-use Model\Cliente;
+use Model\Empleado;
 
-include_once __DIR__ . '/../../Model/cliente.php';
+include_once __DIR__ . '/../../Model/Empleado.php';
 
 class UsuarioMapping{	
-	public static function ToUser($dto){
-        
-        $usuario = new Cliente($dto->usuario, $dto->nombre,$dto->apellido, 0);
-        $usuario->rolUsuario  = $dto->rolUsuario;
-        $usuario->rolEmpleado  = $dto->rolEmpleado;
-        return $usuario;
+        public static function ToUser($dto): Empleado
+        {
+                $usuario = new Empleado($dto->nombre, $dto->apellido, $dto->rolEmpleado);
+                return $usuario;
 	}
 }
-?>

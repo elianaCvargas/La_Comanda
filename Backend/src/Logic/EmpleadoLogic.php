@@ -16,6 +16,7 @@ include_once __DIR__ . '/../Common/Enum/RolesEmpleadosEnum.php';
 include_once __DIR__ . '/../Common/Mappings/UsuarioMapping.php';
 include_once __DIR__ . '/../Common/Util/ValidationHelper.php';
 include_once __DIR__ . '/../Common/ExceptionManager/ApplicationException.php';
+include_once __DIR__ . '/../Db/UsuarioDb.php';
 
 class EmpleadoLogic
 {
@@ -30,11 +31,12 @@ class EmpleadoLogic
       foreach($errores as $error)
       {
         echo $error."\n";
+        return "";
       }
     }
 
     $usuarioNuevo = null;
-    if ($dto->rolEmpleado == Enum_RolesEmpleados::Cervecero) {
+    if ($dto->rolEmpleado == Enum_RolesEmpleados::Mozo) {
       $usuarioNuevo = UsuarioMapping::ToUser($dto);
       UsuarioDb::create($usuarioNuevo);
     }

@@ -13,12 +13,14 @@ abstract class Usuario implements JsonSerializable
     private $nombre;
     private $apellido;
     private $userRol;
+    private $username;
 
-    public function __construct($nombre, $apellido)
+    public function __construct($nombre, $apellido, $username)
     {
         $this->id = 0;
         $this->nombre = strtolower($nombre);
         $this->apellido = ucfirst($apellido);
+        $this->username = ucfirst($username);
     }
 
     public function getId(): ?int
@@ -56,7 +58,15 @@ abstract class Usuario implements JsonSerializable
         $this->apellido = $apellido;
     }
 
+    // public function getDni(): ?int
+    // {
+    //     return $this->dni;
+    // }
 
+    // public function getTelefono(): ?int
+    // {
+    //     return $this->telefono;
+    // }
 
     public function jsonSerialize()
     {
