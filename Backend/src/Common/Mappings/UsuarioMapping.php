@@ -12,7 +12,6 @@ class UsuarioMapping{
         $usuario = new Cliente($dto->usuario, $dto->nombre,$dto->apellido, 0);
         $usuario->rolUsuario  = $dto->rolUsuario;
         $usuario->rolEmpleado  = $dto->rolEmpleado;
-
         return $usuario;
 	}
 }

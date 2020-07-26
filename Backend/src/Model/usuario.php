@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Model;
@@ -9,18 +10,15 @@ abstract class Usuario implements JsonSerializable
 {
 
     private $id;
-    private $username;
-    private $firstName;
-    private $lastName;
+    private $nombre;
+    private $apellido;
     private $userRol;
-    private $empleadoRol;
 
-    public function __construct($username, $firstName, $lastName)
+    public function __construct($nombre, $apellido)
     {
         $this->id = 0;
-        $this->username = strtolower($username);
-        $this->firstName = ucfirst($firstName);
-        $this->lastName = ucfirst($lastName);
+        $this->nombre = strtolower($nombre);
+        $this->apellido = ucfirst($apellido);
     }
 
     public function getId(): ?int
@@ -33,48 +31,31 @@ abstract class Usuario implements JsonSerializable
         return $this->userRol;
     }
 
-    public function getEmpleadoRol(): ?int
-    {
-        return $this->empleadoRol;
-    }
-
-    protected function setUserRol(int $rolId) 
+    protected function setUserRol(int $rolId)
     {
         $this->userRol = $rolId;
     }
 
-    protected function setEmpleadoRol(int $rolId) 
+    public function getNombre(): string
     {
-        $this->empleadoRol = $rolId;
+        return $this->nombre;
     }
 
-    public function getUsername(): string
+    public function setNombre($nombre)
     {
-        return $this->username;
+        $this->nombre = $nombre;
     }
 
-    public function getFirstName(): string
+    public function getApellido(): string
     {
-        return $this->firstName;
+        return $this->apellido;
     }
 
-    public function getLastName(): string
+    public function setApellido(int $apellido)
     {
-        return $this->lastName;
+        $this->apellido = $apellido;
     }
 
-    public function setNombre($nombre) 
-    {
-        $this->firstName = $nombre;
-    }
-    public function setApellido(int $apellido) 
-    {
-        $this->lastName = $apellido;
-    }
-    public function setUsuario(int $usuario) 
-    {
-        $this->username = $usuario;
-    }
 
 
     public function jsonSerialize()

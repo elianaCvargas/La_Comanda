@@ -5,7 +5,7 @@ use Model\Usuario;
 use Db\db;
 include_once __DIR__ . '/../../src/Db/db.php';
 
-class ClienteDb extends db{
+class UsuarioDb extends db{
 	
 	// private function view_users(){
 	// 	try {
@@ -22,7 +22,6 @@ class ClienteDb extends db{
 
 	// function get_view_users(){
 	// 	return $this->view_users();
-	// }
 
 	public static function create(Usuario $user){
 		try {

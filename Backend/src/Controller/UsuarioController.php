@@ -20,23 +20,21 @@ include_once __DIR__ . '/../../src/Common/Mappings/UsuarioDtoMapping.php';
 
 class UsuarioController
 {
-    public function Crear($request, $response, $args) {
-      $datosArray = $request->getParsedBody();
-      if(isset($datosArray["nombre"]) && isset($datosArray["apellido"]) && isset($datosArray["usuario"]) 
-      && isset($datosArray["rolUsuario"]) && isset($datosArray["rolEmpleado"]))
-      {
-        $user = json_encode($datosArray);
-        $this->ValidarDatosEntrada($datosArray);
-        $usuarioDto = UsuarioDtoMapping::ToUserDto($user);
-        $usuarioLogic = new UsuarioLogic();
-        $usuarioLogic->Crear($usuarioDto);
-      } 
-      else{
-
-        echo "Faltan definir los campos";
-      }  
-
-    }
+    // public function Crear($request, $response, $args) {
+    //   $datosArray = $request->getParsedBody();
+    //   if(isset($datosArray["nombre"]) && isset($datosArray["apellido"]) && isset($datosArray["usuario"]) 
+    //   && isset($datosArray["rolUsuario"]) && isset($datosArray["rolEmpleado"]))
+    //   {
+    //     $user = json_encode($datosArray);
+    //     $this->ValidarDatosEntrada($datosArray);
+    //     $usuarioDto = UsuarioDtoMapping::($user);
+    //     $usuarioLogic = new UsuarioLogic();
+    //     $usuarioLogic->Crear($usuarioDto);
+    //   } 
+    //   else{
+    //     echo "Faltan definir los campos";
+    //   }  
+    // }
    
 
 

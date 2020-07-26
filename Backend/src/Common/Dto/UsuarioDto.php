@@ -13,7 +13,7 @@ class UsuarioDto
     public $numeroCliente;
     public $nombre;
     public $apellido;
-    public $usuario;
+    public $dni;
     public $rolUsuario;
     public $rolEmpleado;
 }
