@@ -35,4 +35,23 @@ class EmpleadoLogic
     $usuarioNuevo = UsuarioMapping::ToEmpleado($dto);
     UsuarioDb::createEmpleado($usuarioNuevo);
   }
+
+  public function Editar(EmpleadoDto $dto)
+  {
+    $errores = [];
+    $erroresEmpleado =  ValidationHelper::ValidarEmpleadoRequest($dto);
+    $erroresUsuario = ValidationHelper::ValidarUsuarioRequest($dto->nombre, $dto->apellido, $dto->username);
+
+    if (count($erroresUsuario) > 0 || $erroresEmpleado > 0) {
+      $errores = array_merge($erroresUsuario, $erroresEmpleado);
+      foreach($errores as $error)
+      {
+        echo $error."\n";
+        return "";
+      }
+    }
+
+    $usuarioEmpleado = UsuarioMapping::ToEmpleado($dto);
+    UsuarioDb::update_Empleado($usuarioEmpleado, $usuarioEmpleado->id);
+  }
 }

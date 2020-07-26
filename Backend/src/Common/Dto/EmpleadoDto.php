@@ -5,6 +5,7 @@ namespace Common\Dto;
 
 class EmpleadoDto
 {
+    public $id;
     public $nombre;
     public $apellido;
     public $dni;

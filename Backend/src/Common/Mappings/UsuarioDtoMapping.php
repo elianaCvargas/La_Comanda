@@ -18,10 +18,7 @@ class UsuarioDtoMapping{
         $usuarioDto = new UsuarioDto();
         $usuarioDto->nombre  = $obj->nombre;
         $usuarioDto->apellido  = $obj->apellido;
-        $usuarioDto->usuario  = $obj->usuario;
-        $usuarioDto->rolUsuario  = $obj->rolUsuario;
-        $usuarioDto->rolEmpleado  = $obj->rolEmpleado;
-
+        $usuarioDto->username  = $obj->username;
         return $usuarioDto;
         }
         
@@ -29,6 +26,7 @@ class UsuarioDtoMapping{
         {
                 $obj = json_decode($data);
                 $empleadoDto = new EmpleadoDto();
+                $empleadoDto->id = $obj->id;
                 $empleadoDto->nombre  = $obj->nombre;
                 $empleadoDto->apellido  = $obj->apellido;
                 $empleadoDto->username  = $obj->username;

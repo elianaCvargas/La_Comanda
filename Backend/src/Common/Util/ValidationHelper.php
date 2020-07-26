@@ -26,7 +26,7 @@ abstract class ValidationHelper
 
         if($dto->rolEmpleado === "" || $dto->rolEmpleado === null)
         {
-            array_push( $errores, "Debe ingresar un telefono.");
+            array_push( $errores, "Debe ingresar un Rol.");
         }
 
       return $errores;
@@ -48,7 +48,7 @@ abstract class ValidationHelper
         }
               if($username === "" || $username === null)
         {
-            array_push( $errores, "Debe ingresar un telefono.");
+            array_push( $errores, "Debe ingresar un email.");
         }
 
 

@@ -16,8 +16,9 @@ include_once __DIR__ . '/../Controller/SocioController.php';
 
 return function (App $app) {
     $container = $app->getContainer();  
-    $app->group('/mozo', function ($app) {   
+    $app->group('/empleado', function ($app) {   
         $this->post('', EmpleadoController::class . ':Crear');   
+        $this->put('', EmpleadoController::class . ':Editar');   
     });
 
     $app->group('/socio', function ($app) {   

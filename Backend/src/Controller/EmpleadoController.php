@@ -46,4 +46,27 @@ class EmpleadoController extends BaseController
      echo $ae->Message();
     }
   }
+
+  public function Editar($request, $response, $args)
+  {
+
+    try {
+      $datosArray = $request->getParsedBody();
+      if ($this->ValidateRequest($datosArray, ["id","nombre", "apellido", "username", "rolEmpleado"])) 
+      {
+        $user = json_encode($datosArray);
+        $empladoDto = UsuarioDtoMapping::ToUserEmployeeDto($user);
+        $empleadoLogic = new EmpleadoLogic();
+        $empleadoLogic->Crear($empladoDto);
+      } 
+      else
+      {
+        echo "Faltan definir los campos";
+      }
+    } catch (Exception $e) {
+      $response->withJson("Algun problema no conocido");
+    } catch (ApplicationException $ae) {
+     echo $ae->Message();
+    }
+  }
 }

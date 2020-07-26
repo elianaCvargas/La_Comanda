@@ -250,3 +250,7 @@
 [2020-07-26 07:00:35] UTN FRA LOGGER.INFO: metodo=POST, URI=http%3A%2F%2Flocalhost%3A8080%2FLa_Comanda%2FBackend%2Fpublic, RUTA=socio, autoridad=localhost%3A8080 [] {"uid":"909fbc3"}
 [2020-07-26 07:01:26] UTN FRA LOGGER.INFO: metodo=POST, URI=http%3A%2F%2Flocalhost%3A8080%2FLa_Comanda%2FBackend%2Fpublic, RUTA=socio, autoridad=localhost%3A8080 [] {"uid":"6dd18e5"}
 [2020-07-26 07:01:57] UTN FRA LOGGER.INFO: metodo=POST, URI=http%3A%2F%2Flocalhost%3A8080%2FLa_Comanda%2FBackend%2Fpublic, RUTA=socio, autoridad=localhost%3A8080 [] {"uid":"3a8a2f8"}
+[2020-07-26 18:43:45] UTN FRA LOGGER.INFO: metodo=PUT, URI=http%3A%2F%2Flocalhost%3A8080%2FLa_Comanda%2FBackend%2Fpublic, RUTA=empleado, autoridad=localhost%3A8080 [] {"uid":"7e2f74f"}
+[2020-07-26 18:44:38] UTN FRA LOGGER.INFO: metodo=PUT, URI=http%3A%2F%2Flocalhost%3A8080%2FLa_Comanda%2FBackend%2Fpublic, RUTA=empleado, autoridad=localhost%3A8080 [] {"uid":"3947967"}
+[2020-07-26 18:44:50] UTN FRA LOGGER.INFO: metodo=PUT, URI=http%3A%2F%2Flocalhost%3A8080%2FLa_Comanda%2FBackend%2Fpublic, RUTA=empleado, autoridad=localhost%3A8080 [] {"uid":"7081144"}
+[2020-07-26 18:45:29] UTN FRA LOGGER.INFO: metodo=PUT, URI=http%3A%2F%2Flocalhost%3A8080%2FLa_Comanda%2FBackend%2Fpublic, RUTA=empleado, autoridad=localhost%3A8080 [] {"uid":"f4d8749"}
