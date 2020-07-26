@@ -26,7 +26,7 @@ class UsuarioDtoMapping{
         {
                 $obj = json_decode($data);
                 $empleadoDto = new EmpleadoDto();
-                $empleadoDto->id = $obj->id;
+                $empleadoDto->id  = $obj->id;
                 $empleadoDto->nombre  = $obj->nombre;
                 $empleadoDto->apellido  = $obj->apellido;
                 $empleadoDto->username  = $obj->username;
@@ -37,7 +37,8 @@ class UsuarioDtoMapping{
 	public static function ToSocioDto($data) : SocioDto
 	{
 		$obj = json_decode($data);
-		$empleadoDto = new SocioDto();
+                $empleadoDto = new SocioDto();
+                $empleadoDto->id  = $obj->id;
 		$empleadoDto->nombre  = $obj->nombre;
 		$empleadoDto->apellido  = $obj->apellido;
 		$empleadoDto->username  = $obj->username;

@@ -4,12 +4,27 @@ namespace Controller;
 
 class BaseController
 {
-  public function ValidateRequest(array $datosArray, array $properties)
+  public function ValidateCreateRequest(array $datosArray, array $properties)
   {
     $result = true;
     foreach ($properties as $property)
     {
       $result = $result && isset($datosArray[$property]);
+    }
+
+    return $result;
+  }
+
+  public function ValidateModifyRequest(array $datosArray, string $idField, array $properties)
+  {
+    if(!isset($datosArray[$idField])) {
+      return false;
+    }
+
+    $result = false;
+    foreach ($properties as $property)
+    {
+      $result = $result || isset($datosArray[$property]);
     }
 
     return $result;

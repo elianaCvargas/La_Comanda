@@ -20,8 +20,8 @@ class EmpleadoLogic
   public function Crear(EmpleadoDto $dto)
   {
     $errores = [];
-    $erroresEmpleado =  ValidationHelper::ValidarEmpleadoRequest($dto);
-    $erroresUsuario = ValidationHelper::ValidarUsuarioRequest($dto->nombre, $dto->apellido, $dto->username);
+    $erroresEmpleado =  ValidationHelper::ValidarCreateEmpleadoRequest($dto);
+    $erroresUsuario = ValidationHelper::ValidarCreateUsuarioRequest($dto->nombre, $dto->apellido, $dto->username);
 
     if (count($erroresUsuario) > 0 || $erroresEmpleado > 0) {
       $errores = array_merge($erroresUsuario, $erroresEmpleado);
@@ -36,22 +36,21 @@ class EmpleadoLogic
     UsuarioDb::createEmpleado($usuarioNuevo);
   }
 
-  public function Editar(EmpleadoDto $dto)
+  public function Modificar(EmpleadoDto $dto)
   {
     $errores = [];
-    $erroresEmpleado =  ValidationHelper::ValidarEmpleadoRequest($dto);
-    $erroresUsuario = ValidationHelper::ValidarUsuarioRequest($dto->nombre, $dto->apellido, $dto->username);
+    $erroresUsuario = ValidationHelper::ValidarModifyUsuarioRequest($dto->id, $dto->nombre, $dto->apellido, $dto->username);
 
-    if (count($erroresUsuario) > 0 || $erroresEmpleado > 0) {
-      $errores = array_merge($erroresUsuario, $erroresEmpleado);
+    if (count($erroresUsuario) > 0) {
       foreach($errores as $error)
       {
         echo $error."\n";
-        return "";
       }
+
+      return;
     }
 
-    $usuarioEmpleado = UsuarioMapping::ToEmpleado($dto);
-    UsuarioDb::update_Empleado($usuarioEmpleado, $usuarioEmpleado->id);
+    $usuarioNuevo = UsuarioMapping::ToEmpleado($dto);
+    UsuarioDb::modifyEmpleado($usuarioNuevo);
   }
 }

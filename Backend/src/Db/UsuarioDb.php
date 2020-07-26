@@ -3,12 +3,14 @@
 namespace Db;
 
 use App\Model\Socio;
+use Common\Util\DbQueryBuilder;
 use Model\Usuario;
 use Db\db;
 use Model\Empleado;
 use PHPUnit\Framework\Exception;
 
-include_once __DIR__ . '/../../src/Db/db.php';
+include_once __DIR__ . '/../Db/db.php';
+include_once __DIR__ . '/../Common/Util/DbQueryBuilder.php';
 
 abstract class UsuarioDb extends db
 {
@@ -39,9 +41,7 @@ abstract class UsuarioDb extends db
 		UsuarioDb::createUser($socio, null);
 	}
 
-	private static function createUser(Usuario $user, ?int $rolEmpleado)
-	{
-		var_dump($user);
+	private static function createUser(Usuario $user, ?int $rolEmpleado){
 		// try {
 		$SQL = 'INSERT INTO usuarios (Username,Nombre, Apellido, RolUsuarioID, RolEmpleadoID) VALUES (?,?,?,?,?)';
 		$result = db::connect()->prepare($SQL);
@@ -59,27 +59,35 @@ abstract class UsuarioDb extends db
 		// }
 	}
 
-	public static function update_Empleado(Empleado $data, ?int $usuarioId)
-	{
-		try {
-			$SQL = 'UPDATE Usuarios SET Username = ?, Nombre = ?, Apellido = ?, RolUsuarioId = ?, RolEmpleadoId = ? WHERE id_user = ?';
-			$result = db::connect()->prepare($SQL);
-			$result->execute(array(
-				$data->getUsername(),
-				$data->getNombre(),
-				$data->getApellido(),
-				$data->getUserRol(),
-				$data->getUserRolEmpleado()
-			));
-		} catch (Exception $e) {
-			die('Error Administrator(update_user) ' . $e->getMessage());
-		} finally {
-			$result = null;
-		}
+	public static function modifyEmpleado(Empleado $empleado){
+		UsuarioDb::modifyUser($empleado, $empleado->getUserRolEmpleado());
 	}
 
-	// function set_register_user($data)
-	// {
+	public static function modifySocio(Socio $socio){
+		UsuarioDb::modifyUser($socio, null);
+	}
+
+	private static function modifyUser(Usuario $user, ?int $rolEmpleado){
+		// try {
+			$updateFields = DbQueryBuilder::BuildUpdateFields(
+				['Username', 'Nombre', 'Apellido', 'RolEmpleadoID'],
+				[$user->getUserName(), $user->getNombre(), $user->getApellido(), $rolEmpleado]
+			);
+
+			$SQL = 'UPDATE usuarios SET '.$updateFields.' WHERE Id=?';
+			$result = db::connect()->prepare($SQL);
+			$result->execute(array(
+				$user->getId()
+				));		
+
+		// } catch (Exception $e) {
+		// 	die('Error ClienteRepository(Create) '.$e->getMessage());
+		// } finally{
+		// 	$result = null;
+		// }
+	}
+
+	// function set_register_user($data){
 	// 	$this->register_users($data);
 	// }
 

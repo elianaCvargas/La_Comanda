@@ -5,6 +5,7 @@ namespace Common\Dto;
 
 class SocioDto
 {
+    public $id;
     public $nombre;
     public $apellido;
     public $username;

@@ -29,7 +29,7 @@ class EmpleadoController extends BaseController
 
     try {
       $datosArray = $request->getParsedBody();
-      if ($this->ValidateRequest($datosArray, ["nombre", "apellido", "username", "rolEmpleado"])) 
+      if ($this->ValidateCreateRequest($datosArray, ["nombre", "apellido", "username", "rolEmpleado"])) 
       {
         $user = json_encode($datosArray);
         $empladoDto = UsuarioDtoMapping::ToUserEmployeeDto($user);
@@ -47,21 +47,19 @@ class EmpleadoController extends BaseController
     }
   }
 
-  public function Editar($request, $response, $args)
+  public function Modificar($request, $response, $args)
   {
-
     try {
       $datosArray = $request->getParsedBody();
-      if ($this->ValidateRequest($datosArray, ["id","nombre", "apellido", "username", "rolEmpleado"])) 
-      {
+      if (
+        $this->ValidateModifyRequest($datosArray, "id", ["nombre", "apellido", "username"])
+      ) {
         $user = json_encode($datosArray);
-        $empladoDto = UsuarioDtoMapping::ToUserEmployeeDto($user);
+        $empleadoDto = UsuarioDtoMapping::ToUserEmployeeDto($user);
         $empleadoLogic = new EmpleadoLogic();
-        $empleadoLogic->Crear($empladoDto);
-      } 
-      else
-      {
-        echo "Faltan definir los campos";
+        $empleadoLogic->Modificar($empleadoDto);
+      } else {
+        echo "Debe definir al menos un campo para modificar y ingresar un id";
       }
     } catch (Exception $e) {
       $response->withJson("Algun problema no conocido");
