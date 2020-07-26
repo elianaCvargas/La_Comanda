@@ -28,8 +28,8 @@ class EmpleadoController
     try {
       $datosArray = $request->getParsedBody();
       if (
-        isset($datosArray["nombre"]) && isset($datosArray["apellido"]) && isset($datosArray["dni"])
-        && isset($datosArray["telefono"]) && isset($datosArray["rolEmpleado"])
+        isset($datosArray["nombre"]) && isset($datosArray["apellido"]) && isset($datosArray["username"])
+       && isset($datosArray["rolEmpleado"])
       ) {
         $user = json_encode($datosArray);
         $empladoDto = UsuarioDtoMapping::ToUserEmployeeDto($user);

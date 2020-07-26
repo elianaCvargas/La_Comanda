@@ -19,9 +19,11 @@ class EmpleadoLogic
 {
   public function Crear(EmpleadoDto $dto)
   {
+    var_dump($dto);
+    
     $errores = [];
     $erroresEmpleado =  ValidationHelper::ValidarEmpleadoRequest($dto);
-    $erroresUsuario = ValidationHelper::ValidarUsuarioRequest($dto->nombre, $dto->apellido);
+    $erroresUsuario = ValidationHelper::ValidarUsuarioRequest($dto->nombre, $dto->apellido, $dto->username);
 
     if (count($erroresUsuario) > 0 || $erroresEmpleado > 0) {
       $errores = array_merge($erroresUsuario, $erroresEmpleado);
