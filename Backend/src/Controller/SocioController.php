@@ -13,7 +13,7 @@ include_once __DIR__ . '/../Common/Dto/UsuarioDto.php';
 include_once __DIR__ . '/../Logic/UsuarioLogic.php';
 include_once __DIR__ . '/../Logic/EmpleadoLogic.php';
 include_once __DIR__ . '/../Common/Mappings/UsuarioDtoMapping.php';
-
+include_once __DIR__ . '/../Logic/SocioLogic.php';
 
 class SocioController extends BaseController
 {
