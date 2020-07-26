@@ -18,9 +18,9 @@ abstract class Usuario implements JsonSerializable
     public function __construct($nombre, $apellido, $username)
     {
         $this->id = 0;
-        $this->nombre = strtolower($nombre);
-        $this->apellido = ucfirst($apellido);
-        $this->username = ucfirst($username);
+        $this->nombre = $nombre;
+        $this->apellido = $apellido;
+        $this->username = $username;
     }
 
     public function getId(): ?int
@@ -56,6 +56,11 @@ abstract class Usuario implements JsonSerializable
     public function setApellido(int $apellido)
     {
         $this->apellido = $apellido;
+    }
+
+    public function getUsername(): string
+    {
+        return $this->username;
     }
 
     // public function getDni(): ?int
