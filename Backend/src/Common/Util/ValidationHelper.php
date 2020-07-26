@@ -14,17 +14,17 @@ abstract class ValidationHelper
     {
         $errores = [];
       
-        if($dto->dni === "" || $dto->dni === null)
-        {
-            array_push( $errores, "Debe ingresar un DNI.");
-        }
+        // if($dto->dni === "" || $dto->dni === null)
+        // {
+        //     array_push( $errores, "Debe ingresar un DNI.");
+        // }
 
-        if($dto->telefono === "" || $dto->telefono === "")
-        {
-            array_push( $errores, "Debe ingresar un telefono.");
-        }
+        // if($dto->telefono === "" || $dto->telefono === "")
+        // {
+        //     array_push( $errores, "Debe ingresar un telefono.");
+        // }
 
-        if($dto->rolEmpleado === "" || $dto->rolEmpleado === "")
+        if($dto->rolEmpleado === "" || $dto->rolEmpleado === null)
         {
             array_push( $errores, "Debe ingresar un telefono.");
         }
@@ -32,7 +32,7 @@ abstract class ValidationHelper
       return $errores;
     }
 
-    public static function ValidarUsuarioRequest($nombre, $apellido) 
+    public static function ValidarUsuarioRequest($nombre, $apellido, $username) 
     {
         $errores = [];
 
@@ -46,6 +46,11 @@ abstract class ValidationHelper
         {
             array_push($errores, "Debe ingresar un apellido.");
         }
+              if($username === "" || $username === null)
+        {
+            array_push( $errores, "Debe ingresar un telefono.");
+        }
+
 
       return $errores;
     }

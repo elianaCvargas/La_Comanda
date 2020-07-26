@@ -17,7 +17,7 @@ class SocioLogic
   public function Crear(SocioDto $dto)
   {
     $errores = [];
-    $erroresUsuario = ValidationHelper::ValidarUsuarioRequest($dto->nombre, $dto->apellido);
+    $erroresUsuario = ValidationHelper::ValidarUsuarioRequest($dto->nombre, $dto->apellido, $dto->username);
 
     if (count($erroresUsuario) > 0) {
       foreach($errores as $error)

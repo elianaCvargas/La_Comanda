@@ -9,7 +9,7 @@ include_once __DIR__ . '/../../Model/Empleado.php';
 class UsuarioMapping{	
         public static function ToUser($dto): Empleado
         {
-                $usuario = new Empleado($dto->nombre, $dto->apellido, $dto->username, $dto->rolEmpleado);
+                $usuario = new Empleado($dto->nombre, $dto->apellido, $dto->rolEmpleado, $dto->username);
                 return $usuario;
 	}
 }

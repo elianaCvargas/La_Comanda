@@ -29,8 +29,7 @@ class UsuarioDtoMapping{
                 $empleadoDto = new EmpleadoDto();
                 $empleadoDto->nombre  = $obj->nombre;
                 $empleadoDto->apellido  = $obj->apellido;
-                $empleadoDto->dni  = $obj->dni;
-                $empleadoDto->telefono  = $obj->telefono;
+                $empleadoDto->username  = $obj->username;
                 $empleadoDto->rolEmpleado  = $obj->rolEmpleado;
                 return $empleadoDto;
         }

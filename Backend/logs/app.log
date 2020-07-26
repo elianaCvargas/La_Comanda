@@ -234,3 +234,10 @@
 [2020-07-26 05:55:40] UTN FRA LOGGER.INFO: metodo=POST, URI=http%3A%2F%2Flocalhost%3A8080%2FLa_Comanda%2FBackend%2Fpublic, RUTA=mozo, autoridad=localhost%3A8080 [] {"uid":"0b93940"}
 [2020-07-26 05:57:39] UTN FRA LOGGER.INFO: metodo=POST, URI=http%3A%2F%2Flocalhost%3A8080%2FLa_Comanda%2FBackend%2Fpublic, RUTA=mozo, autoridad=localhost%3A8080 [] {"uid":"6ba1a47"}
 [2020-07-26 06:08:53] UTN FRA LOGGER.INFO: metodo=POST, URI=http%3A%2F%2Flocalhost%3A8080%2FLa_Comanda%2FBackend%2Fpublic, RUTA=mozo, autoridad=localhost%3A8080 [] {"uid":"5184d02"}
+[2020-07-26 06:10:45] UTN FRA LOGGER.INFO: metodo=POST, URI=http%3A%2F%2Flocalhost%3A8080%2FLa_Comanda%2FBackend%2Fpublic, RUTA=mozo, autoridad=localhost%3A8080 [] {"uid":"05d011d"}
+[2020-07-26 06:11:43] UTN FRA LOGGER.INFO: metodo=POST, URI=http%3A%2F%2Flocalhost%3A8080%2FLa_Comanda%2FBackend%2Fpublic, RUTA=mozo, autoridad=localhost%3A8080 [] {"uid":"f61f52a"}
+[2020-07-26 06:12:38] UTN FRA LOGGER.INFO: metodo=POST, URI=http%3A%2F%2Flocalhost%3A8080%2FLa_Comanda%2FBackend%2Fpublic, RUTA=mozo, autoridad=localhost%3A8080 [] {"uid":"33ee2ba"}
+[2020-07-26 06:14:41] UTN FRA LOGGER.INFO: metodo=POST, URI=http%3A%2F%2Flocalhost%3A8080%2FLa_Comanda%2FBackend%2Fpublic, RUTA=mozo, autoridad=localhost%3A8080 [] {"uid":"05c191c"}
+[2020-07-26 06:20:45] UTN FRA LOGGER.INFO: metodo=POST, URI=http%3A%2F%2Flocalhost%3A8080%2FLa_Comanda%2FBackend%2Fpublic, RUTA=mozo, autoridad=localhost%3A8080 [] {"uid":"81766a3"}
+[2020-07-26 06:26:40] UTN FRA LOGGER.INFO: metodo=POST, URI=http%3A%2F%2Flocalhost%3A8080%2FLa_Comanda%2FBackend%2Fpublic, RUTA=mozo, autoridad=localhost%3A8080 [] {"uid":"21c8e7e"}
+[2020-07-26 06:30:27] UTN FRA LOGGER.INFO: metodo=POST, URI=http%3A%2F%2Flocalhost%3A8080%2FLa_Comanda%2FBackend%2Fpublic, RUTA=mozo, autoridad=localhost%3A8080 [] {"uid":"a69afd2"}
