@@ -9,6 +9,7 @@ use Model\Empleado;
 
 include_once __DIR__ . '/../../Common/Dto/UsuarioDto.php';
 include_once __DIR__ . '/../Dto/EmpleadoDto.php';
+include_once __DIR__ . '/../Dto/SocioDto.php';
 
 class UsuarioDtoMapping{
 
