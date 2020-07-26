@@ -5,6 +5,7 @@ namespace Logic;
 use Common\Dto\SocioDto;
 use Common\Mappings\UsuarioMapping;
 use Common\Util\ValidationHelper;
+use Db\UsuarioDb;
 
 include_once __DIR__ . '/../Common/Enum/RolesUsuariosEnum.php';
 include_once __DIR__ . '/../Common/Enum/RolesEmpleadosEnum.php';
@@ -28,7 +29,7 @@ class SocioLogic
       return;
     }
 
-    $usuarioNuevo = UsuarioMapping::ToUser($dto);
+    $usuarioNuevo = UsuarioMapping::ToSocio($dto);
     UsuarioDb::create($usuarioNuevo);
   }
 }

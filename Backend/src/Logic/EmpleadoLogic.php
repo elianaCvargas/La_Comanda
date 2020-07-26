@@ -3,13 +3,10 @@
 namespace Logic;
 
 use Common\Dto\EmpleadoDto;
-use Common\Enum;
-use Common\Enum\Enum_RolesUsuarios;
 use Common\Enum\Enum_RolesEmpleados;
 use Common\Mappings\UsuarioMapping;
 use Db\UsuarioDb;
 use Common\Util\ValidationHelper;
-use Common\ExceptionManager\ApplicationException;
 
 include_once __DIR__ . '/../Common/Enum/RolesUsuariosEnum.php';
 include_once __DIR__ . '/../Common/Enum/RolesEmpleadosEnum.php';
@@ -37,11 +34,8 @@ class EmpleadoLogic
       }
     }
 
-    $usuarioNuevo = null;
-    if ($dto->rolEmpleado == Enum_RolesEmpleados::Mozo) {
-      $usuarioNuevo = UsuarioMapping::ToUser($dto);
-      UsuarioDb::create($usuarioNuevo);
-    }
+    $usuarioNuevo = UsuarioMapping::ToEmpleado($dto);
+    UsuarioDb::createEmpleado($usuarioNuevo);
 
   }
 }

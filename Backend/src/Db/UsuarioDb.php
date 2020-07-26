@@ -1,13 +1,14 @@
 <?php
 namespace Db;
 
+use App\Model\Socio;
 use Model\Usuario;
 use Db\db;
 use Model\Empleado;
 
 include_once __DIR__ . '/../../src/Db/db.php';
 
-class UsuarioDb extends db{
+abstract class UsuarioDb extends db{
 	
 	// private function view_users(){
 	// 	try {
@@ -25,7 +26,15 @@ class UsuarioDb extends db{
 	// function get_view_users(){
 	// 	return $this->view_users();
 
-	public static function create(Empleado $user){
+	public static function createEmpleado(Empleado $empleado){
+		UsuarioDb::createUser($empleado, $empleado->getUserRolEmpleado());
+	}
+
+	public static function createSocio(Socio $socio){
+		UsuarioDb::createUser($socio, null);
+	}
+
+	private static function createUser(Usuario $user, ?int $rolEmpleado){
 		var_dump($user);
 		// try {
 			$SQL = 'INSERT INTO usuarios ("Username",Nombre, Apellido, RolUsuarioID, RolEmpleadoID) VALUES (?,?,?,?,?)';
@@ -35,7 +44,7 @@ class UsuarioDb extends db{
 									$user->getNombre(),
 									$user->getApellido(),
 									$user->getUserRol(),
-									$user->getUserRolEmpleado()
+									$rolEmpleado
 									)
 							);			
 		// } catch (Exception $e) {
