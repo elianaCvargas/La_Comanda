@@ -19,9 +19,9 @@ return function (App $app) {
         };
     };
     $c['notFoundHandler'] = function ($c) {
-        return function ($request, $response, $error) use ($c) {
+        return function ($request, $response) use ($c) {
             $datos[]=array();
-            $datos["error"]=$error;
+            $datos["error"]="Dont Found";
             $datos["mensaje"]="Ruta no existente" ;
             $datos["status"]="404" ;
             return $c->get('renderer')->render($response, 'error.phtml', $datos);

@@ -6,6 +6,7 @@ use Common\Mappings\UsuarioDtoMapping;
 use PHPUnit\Framework\Exception;
 use Common\ExceptionManager\ApplicationException;
 use Logic\EmpleadoLogic;
+use Logic\SocioLogic;
 
 include_once __DIR__ . '/../Model/cliente.php';
 include_once __DIR__ . '/../Common/Dto/UsuarioDto.php';
@@ -18,18 +19,16 @@ class SocioController extends BaseController
 {
   public function Crear($request, $response, $args)
   {
-
     try {
       $datosArray = $request->getParsedBody();
       if (
-        $this->ValidateRequest($datosArray, ["nombre", "apellido", "dni", "telefono", "rolEmpleado"])
+        $this->ValidateRequest($datosArray, ["nombre", "apellido"])
       ) {
         $user = json_encode($datosArray);
-        $empladoDto = UsuarioDtoMapping::ToUserEmployeeDto($user);
-        $empleadoLogic = new EmpleadoLogic();
-        $empleadoLogic->Crear($empladoDto);
+        $empleadoDto = UsuarioDtoMapping::ToSocioDto($user);
+        $empleadoLogic = new SocioLogic();
+        $empleadoLogic->Crear($empleadoDto);
       } else {
-
         echo "Faltan definir los campos";
       }
     } catch (Exception $e) {

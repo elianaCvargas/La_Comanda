@@ -7,7 +7,5 @@ class SocioDto
 {
     public $nombre;
     public $apellido;
-    public $dni;
-    public $telefono;
-    public $rolEmpleado;
+    public $username;
 }

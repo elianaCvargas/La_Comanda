@@ -4,6 +4,7 @@ namespace Common\Mappings;
 use Common\Dto;
 use Common\Dto\UsuarioDto;
 use Common\Dto\EmpleadoDto;
+use Common\Dto\SocioDto;
 use Model\Empleado;
 
 include_once __DIR__ . '/../../Common/Dto/UsuarioDto.php';
@@ -34,4 +35,14 @@ class UsuarioDtoMapping{
                 $empleadoDto->rolEmpleado  = $obj->rolEmpleado;
                 return $empleadoDto;
         }
+
+	public static function ToSocioDto($data) : SocioDto
+	{
+		$obj = json_decode($data);
+		$empleadoDto = new SocioDto();
+		$empleadoDto->nombre  = $obj->nombre;
+		$empleadoDto->apellido  = $obj->apellido;
+		$empleadoDto->username  = $obj->username;
+		return $empleadoDto;
+	}
 }
