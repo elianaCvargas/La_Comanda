@@ -37,7 +37,7 @@ abstract class UsuarioDb extends db{
 	private static function createUser(Usuario $user, ?int $rolEmpleado){
 		var_dump($user);
 		// try {
-			$SQL = 'INSERT INTO usuarios ("Username",Nombre, Apellido, RolUsuarioID, RolEmpleadoID) VALUES (?,?,?,?,?)';
+			$SQL = 'INSERT INTO usuarios (Username,Nombre, Apellido, RolUsuarioID, RolEmpleadoID) VALUES (?,?,?,?,?)';
 			$result = db::connect()->prepare($SQL);
 			$result->execute(array(
 									$user->getUserName(),

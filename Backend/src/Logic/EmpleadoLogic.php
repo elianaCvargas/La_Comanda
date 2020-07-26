@@ -19,8 +19,6 @@ class EmpleadoLogic
 {
   public function Crear(EmpleadoDto $dto)
   {
-    var_dump($dto);
-    
     $errores = [];
     $erroresEmpleado =  ValidationHelper::ValidarEmpleadoRequest($dto);
     $erroresUsuario = ValidationHelper::ValidarUsuarioRequest($dto->nombre, $dto->apellido, $dto->username);
@@ -36,6 +34,5 @@ class EmpleadoLogic
 
     $usuarioNuevo = UsuarioMapping::ToEmpleado($dto);
     UsuarioDb::createEmpleado($usuarioNuevo);
-
   }
 }

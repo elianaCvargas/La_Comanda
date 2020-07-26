@@ -11,17 +11,17 @@ include_once __DIR__ . '/../Dto/EmpleadoDto.php';
 
 class UsuarioDtoMapping{
 
-	// public static function ToUserDto($data){
-        // $obj = json_decode($data);
-        // $usuarioDto = new UsuarioDto();
-        // $usuarioDto->nombre  = $obj->nombre;
-        // $usuarioDto->apellido  = $obj->apellido;
-        // $usuarioDto->usuario  = $obj->usuario;
-        // $usuarioDto->rolUsuario  = $obj->rolUsuario;
-        // $usuarioDto->rolEmpleado  = $obj->rolEmpleado;
+	public static function ToClienteDto($data){
+        $obj = json_decode($data);
+        $usuarioDto = new UsuarioDto();
+        $usuarioDto->nombre  = $obj->nombre;
+        $usuarioDto->apellido  = $obj->apellido;
+        $usuarioDto->usuario  = $obj->usuario;
+        $usuarioDto->rolUsuario  = $obj->rolUsuario;
+        $usuarioDto->rolEmpleado  = $obj->rolEmpleado;
 
-        // return $usuarioDto;
-        // }
+        return $usuarioDto;
+        }
         
         public static function ToUserEmployeeDto($data) : EmpleadoDto
         {
