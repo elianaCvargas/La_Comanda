@@ -30,6 +30,6 @@ class SocioLogic
     }
 
     $usuarioNuevo = UsuarioMapping::ToSocio($dto);
-    UsuarioDb::create($usuarioNuevo);
+    UsuarioDb::createSocio($usuarioNuevo);
   }
 }
