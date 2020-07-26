@@ -22,8 +22,10 @@ class SocioController extends BaseController
   {
     try {
       $datosArray = $request->getParsedBody();
+      var_dump("Datos array: ");
+      var_dump($datosArray);
       if (
-        $this->ValidateRequest($datosArray, ["nombre", "apellido"])
+        $this->ValidateRequest($datosArray, ["nombre", "apellido", "username"])
       ) {
         $user = json_encode($datosArray);
         $empleadoDto = UsuarioDtoMapping::ToSocioDto($user);

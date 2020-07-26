@@ -17,7 +17,7 @@ class UsuarioMapping{
 
 	public static function ToSocio($dto): Socio
 	{
-		$usuario = new Socio($dto->nombre, $dto->apellido, $dto->rolEmpleado, $dto->username);
+		$usuario = new Socio($dto->nombre, $dto->apellido, $dto->username);
 		return $usuario;
 	}
 }

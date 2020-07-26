@@ -250,3 +250,9 @@
 [2020-07-26 07:00:35] UTN FRA LOGGER.INFO: metodo=POST, URI=http%3A%2F%2Flocalhost%3A8080%2FLa_Comanda%2FBackend%2Fpublic, RUTA=socio, autoridad=localhost%3A8080 [] {"uid":"909fbc3"}
 [2020-07-26 07:01:26] UTN FRA LOGGER.INFO: metodo=POST, URI=http%3A%2F%2Flocalhost%3A8080%2FLa_Comanda%2FBackend%2Fpublic, RUTA=socio, autoridad=localhost%3A8080 [] {"uid":"6dd18e5"}
 [2020-07-26 07:01:57] UTN FRA LOGGER.INFO: metodo=POST, URI=http%3A%2F%2Flocalhost%3A8080%2FLa_Comanda%2FBackend%2Fpublic, RUTA=socio, autoridad=localhost%3A8080 [] {"uid":"3a8a2f8"}
+[2020-07-26 07:16:12] UTN FRA LOGGER.INFO: metodo=POST, URI=http%3A%2F%2Flocalhost%3A81%2FLa_Comanda%2FBackend%2Fpublic, RUTA=socio, autoridad=localhost%3A81 [] {"uid":"bd7c67c"}
+[2020-07-26 07:17:39] UTN FRA LOGGER.INFO: metodo=POST, URI=http%3A%2F%2Flocalhost%3A81%2FLa_Comanda%2FBackend%2Fpublic, RUTA=socio, autoridad=localhost%3A81 [] {"uid":"b01c7ea"}
+[2020-07-26 07:17:51] UTN FRA LOGGER.INFO: metodo=POST, URI=http%3A%2F%2Flocalhost%3A81%2FLa_Comanda%2FBackend%2Fpublic, RUTA=socio, autoridad=localhost%3A81 [] {"uid":"84c98b2"}
+[2020-07-26 07:18:34] UTN FRA LOGGER.INFO: metodo=POST, URI=http%3A%2F%2Flocalhost%3A81%2FLa_Comanda%2FBackend%2Fpublic, RUTA=socio, autoridad=localhost%3A81 [] {"uid":"500b0e1"}
+[2020-07-26 07:22:01] UTN FRA LOGGER.INFO: metodo=POST, URI=http%3A%2F%2Flocalhost%3A81%2FLa_Comanda%2FBackend%2Fpublic, RUTA=socio, autoridad=localhost%3A81 [] {"uid":"9004507"}
+[2020-07-26 07:24:52] UTN FRA LOGGER.INFO: metodo=POST, URI=http%3A%2F%2Flocalhost%3A81%2FLa_Comanda%2FBackend%2Fpublic, RUTA=socio, autoridad=localhost%3A81 [] {"uid":"72c5824"}
