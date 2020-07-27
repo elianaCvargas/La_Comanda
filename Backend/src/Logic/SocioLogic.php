@@ -3,6 +3,8 @@
 namespace Logic;
 
 use Common\Dto\SocioDto;
+use Common\Enum\Enum_RolesUsuarios;
+use Common\ExceptionManager\ApplicationException;
 use Common\Mappings\UsuarioMapping;
 use Common\Util\ValidationHelper;
 use Db\UsuarioDb;
@@ -49,5 +51,31 @@ class SocioLogic
 
     $usuarioNuevo = UsuarioMapping::ToSocio($dto);
     UsuarioDb::modifySocio($usuarioNuevo);
+  }
+
+  public function Eliminar(string $id)
+  {
+    $errores = [];
+    $erroresUsuario = ValidationHelper::ValidarDeleteUsuarioRequest($id);
+
+    if (count($erroresUsuario) > 0) {
+      foreach($errores as $error)
+      {
+        echo $error."\n";
+      }
+
+      return;
+    }
+
+    $usuario = UsuarioDb::getUsuarioById(intval($id));
+    if($usuario != null && $usuario->getRolUsuarioID() == Enum_RolesUsuarios::Socio)
+    {
+      UsuarioDb::deleteSocio($usuario->getId());
+      
+    }
+    else 
+    {
+      throw new ApplicationException("No se pudo eliminar el socio.");
+    }
   }
 }

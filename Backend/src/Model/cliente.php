@@ -10,24 +10,24 @@ include_once __DIR__ . '/../../src/Common/Enum/RolesUsuariosEnum.php';
 
 class Cliente extends Usuario
 {
-    private $numeroCliente;
+    // private $numeroCliente;
     
-    public function __construct($username, $firstName, $lastName, $numeroCliente)
-    {
-        parent::__construct($username, $firstName, $lastName);
-        parent::setUserRol(Enum_RolesUsuarios::Cliente);
-        $this->numeroCliente = $numeroCliente;
-    }
+    // public function __construct($username, $firstName, $lastName, $numeroCliente)
+    // {
+    //     parent::__construct($username, $firstName, $lastName);
+    //     parent::setUserRol(Enum_RolesUsuarios::Cliente);
+    //     $this->numeroCliente = $numeroCliente;
+    // }
 
-    public function getId(): ?int
-    {
-        return $this->numeroCliente;
-    }
+    // public function getId(): ?int
+    // {
+    //     return $this->numeroCliente;
+    // }
 
-    public function jsonSerialize()
-    {
-        return  parent::jsonSerialize().array_merge([
-            'numeroCliente' => $this->numeroCliente
-        ]);
-    }
+    // public function jsonSerialize()
+    // {
+    //     return  parent::jsonSerialize().array_merge([
+    //         'numeroCliente' => $this->numeroCliente
+    //     ]);
+    // }
 }

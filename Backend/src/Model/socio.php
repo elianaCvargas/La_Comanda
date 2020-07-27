@@ -13,6 +13,6 @@ class Socio extends Usuario
   public function __construct($id, $nombre, $apellido, $username)
   {
       parent::__construct($id ? $id : 0, $nombre, $apellido, $username);
-      parent::setUserRol(Enum_RolesUsuarios::Socio);
+      parent::setRolUsuarioID(Enum_RolesUsuarios::Socio);
   }
 }

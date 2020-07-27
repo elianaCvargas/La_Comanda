@@ -26,9 +26,9 @@ class SocioController extends BaseController
         $this->ValidateCreateRequest($datosArray, ["nombre", "apellido", "username"])
       ) {
         $user = json_encode($datosArray);
-        $empleadoDto = UsuarioDtoMapping::ToSocioDto($user);
-        $empleadoLogic = new SocioLogic();
-        $empleadoLogic->Crear($empleadoDto);
+        $ocioDto = UsuarioDtoMapping::ToSocioDto($user);
+        $ocioLogic = new SocioLogic();
+        $ocioLogic->Crear($ocioDto);
       } else {
         echo "Faltan definir los campos";
       }
@@ -47,9 +47,9 @@ class SocioController extends BaseController
         $this->ValidateModifyRequest($datosArray, "id", ["nombre", "apellido", "username"])
       ) {
         $user = json_encode($datosArray);
-        $empleadoDto = UsuarioDtoMapping::ToSocioDto($user);
-        $empleadoLogic = new SocioLogic();
-        $empleadoLogic->Modificar($empleadoDto);
+       $socioDto = UsuarioDtoMapping::ToSocioDto($user);
+       $socioLogic = new SocioLogic();
+       $socioLogic->Modificar($socioDto);
       } else {
         echo "Debe definir al menos un campo para modificar y ingresar un id";
       }
@@ -58,5 +58,28 @@ class SocioController extends BaseController
     } catch (ApplicationException $ae) {
      echo $ae->Message();
     }
+  }
+
+  public function Eliminar($request, $response, $args)
+  {
+    try {
+      $datosArray = $request->getParsedBody();
+      if (
+        $this->ValidateDeleteRequest($datosArray, "id")
+      ) {
+        $obj = json_encode($datosArray);
+        $user = json_decode($obj);
+
+       $socioLogic = new SocioLogic();
+       $socioLogic->Eliminar($user->id);
+        echo "Eliminado con exito";
+      } else {
+        echo "Debe definir al menos un campo para modificar y ingresar un id";
+      }
+    } catch (ApplicationException $ae) {
+      echo $ae->Message();
+     }catch (Exception $e) {
+      echo "Algun problema no conocido";
+    } 
   }
 }

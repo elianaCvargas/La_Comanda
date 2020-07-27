@@ -17,7 +17,7 @@ class Empleado extends Usuario
     public function __construct($id, $nombre, $apellido, $rolEmpleado, $username)
     {
         parent::__construct($id, $nombre, $apellido, $username);
-        parent::setUserRol(Enum_RolesUsuarios::Empleado);
+        parent::setRolUsuarioID(Enum_RolesUsuarios::Empleado);
         // $this->dni = $dni;
         // $this->telefono = $telefono;
         $this->rolEmpleado = $rolEmpleado;

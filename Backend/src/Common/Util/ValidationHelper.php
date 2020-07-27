@@ -13,16 +13,6 @@ abstract class ValidationHelper
     public static function ValidarCreateEmpleadoRequest(EmpleadoDto $dto)
     {
         $errores = [];
-      
-        // if($dto->dni === "" || $dto->dni === null)
-        // {
-        //     array_push( $errores, "Debe ingresar un DNI.");
-        // }
-
-        // if($dto->telefono === "" || $dto->telefono === "")
-        // {
-        //     array_push( $errores, "Debe ingresar un telefono.");
-        // }
 
         if($dto->rolEmpleado === "" || $dto->rolEmpleado === null)
         {
@@ -35,7 +25,6 @@ abstract class ValidationHelper
     public static function ValidarCreateUsuarioRequest($nombre, $apellido, $username) 
     {
         $errores = [];
-
         if($nombre === "" || $nombre === null)
         {
            array_push( $errores, "Debe ingresar un nombre.");
@@ -57,7 +46,6 @@ abstract class ValidationHelper
     public static function ValidarModifyUsuarioRequest($id, $nombre, $apellido, $username) 
     {
         $errores = [];
-
         if($id === "") {
             array_push( $errores, "Debe ingresar un id.");
         }
@@ -65,6 +53,16 @@ abstract class ValidationHelper
         if($nombre === "" && $apellido === "" && $username === "")
         {
            array_push( $errores, "Debe modificar al menos un campo.");
+        }
+
+      return $errores;
+    }
+
+    public static function ValidarDeleteUsuarioRequest($id) 
+    {
+        $errores = [];
+        if($id === "") {
+            array_push( $errores, "Debe ingresar un id.");
         }
 
       return $errores;

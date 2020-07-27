@@ -12,8 +12,9 @@ abstract class DbQueryBuilder
     public static function BuildUpdateFields(array $fields, array $values)
     {
       $queryArray = [];
-      for ($i = 0; $i <= count($fields); $i++) {
+      for ($i = 0; $i < count($fields); $i++) {
         $value = $values[$i];
+
         $value ? array_push($queryArray, $fields[$i]."='".$value."'") : null;
       }
 

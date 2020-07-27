@@ -18,7 +18,7 @@ class ApplicationException extends Exception
     // }
 
     public function Message() {
-        return  ": [{$this->code}]: {$this->message}\n";
+        echo  ": [{$this->code}]: {$this->message}\n";
     }
 
     public function customFunction() {

@@ -6,61 +6,61 @@ namespace Model;
 
 use JsonSerializable;
 
-abstract class Usuario implements JsonSerializable
+class Usuario implements JsonSerializable
 {
 
-    private $id;
-    private $nombre;
-    private $apellido;
-    private $userRol;
-    private $username;
+    private $Id;
+    private $Nombre;
+    private $Apellido;
+    private $RolUsuarioID;
+    private $Username;
 
-    public function __construct($id, $nombre, $apellido, $username)
+    public function __construct($Id, $Nombre, $Apellido, $Username)
     {
-        $this->id = $id;
-        $this->nombre = $nombre;
-        $this->apellido = $apellido;
-        $this->username = $username;
+        $this->Id = $Id;
+        $this->Nombre = $Nombre;
+        $this->Apellido = $Apellido;
+        $this->Username = $Username;
     }
 
     public function getId(): ?int
     {
-        return $this->id;
+        return $this->Id;
     }
 
-    public function getUserRol(): ?int
+    public function getRolUsuarioID(): ?int
     {
-        return $this->userRol;
+        return $this->RolUsuarioID;
     }
 
-    protected function setUserRol(int $rolId)
+    public function setRolUsuarioID(int $rolId)
     {
-        $this->userRol = $rolId;
+        $this->RolUsuarioID = $rolId;
     }
 
     public function getNombre(): ?string
     {
-        return $this->nombre;
+        return $this->Nombre;
     }
 
-    public function setNombre($nombre)
+    public function setNombre($Nombre)
     {
-        $this->nombre = $nombre;
+        $this->Nombre = $Nombre;
     }
 
     public function getApellido(): ?string
     {
-        return $this->apellido;
+        return $this->Apellido;
     }
 
-    public function setApellido(int $apellido)
+    public function setApellido(int $Apellido)
     {
-        $this->apellido = $apellido;
+        $this->Apellido = $Apellido;
     }
 
     public function getUsername(): ?string
     {
-        return $this->username;
+        return $this->Username;
     }
 
     // public function getDni(): ?int
@@ -76,8 +76,8 @@ abstract class Usuario implements JsonSerializable
     public function jsonSerialize()
     {
         return [
-            'id' => $this->id,
-            'username' => $this->username,
+            'Id' => $this->Id,
+            'Username' => $this->Username,
             'firstName' => $this->firstName,
             'lastName' => $this->lastName,
         ];

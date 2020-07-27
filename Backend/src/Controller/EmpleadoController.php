@@ -41,8 +41,10 @@ class EmpleadoController extends BaseController
         echo "Faltan definir los campos";
       }
     } catch (Exception $e) {
+      var_dump($e);
       $response->withJson("Algun problema no conocido");
     } catch (ApplicationException $ae) {
+      var_dump($ae);
      echo $ae->Message();
     }
   }
@@ -58,13 +60,37 @@ class EmpleadoController extends BaseController
         $empleadoDto = UsuarioDtoMapping::ToUserEmployeeDto($user);
         $empleadoLogic = new EmpleadoLogic();
         $empleadoLogic->Modificar($empleadoDto);
+        echo "Modificado con exito";
+      } else {
+        echo "Debe definir al menos un campo para modificar e ingresar un id";
+      }
+    } catch (ApplicationException $ae) {
+      echo $ae->Message();
+     }catch (Exception $e) {
+      echo "Algun problema no conocido";
+    } 
+  }
+
+  public function Eliminar($request, $response, $args)
+  {
+    try {
+      $datosArray = $request->getParsedBody();
+      if (
+        $this->ValidateDeleteRequest($datosArray, "id")
+      ) {
+        $obj = json_encode($datosArray);
+        $user = json_decode($obj);
+
+        $empleadoLogic = new EmpleadoLogic();
+        $empleadoLogic->Eliminar($user->id);
+        echo "Eliminado con exito";
       } else {
         echo "Debe definir al menos un campo para modificar y ingresar un id";
       }
-    } catch (Exception $e) {
-      $response->withJson("Algun problema no conocido");
     } catch (ApplicationException $ae) {
-     echo $ae->Message();
-    }
+      echo $ae->Message();
+     }catch (Exception $e) {
+      echo "Algun problema no conocido";
+    } 
   }
 }

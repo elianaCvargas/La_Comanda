@@ -29,4 +29,13 @@ class BaseController
 
     return $result;
   }
+
+  public function ValidateDeleteRequest(array $datosArray, string $idField)
+  {
+    if(!isset($datosArray[$idField])) {
+      return false;
+    }
+
+    return true;
+  }
 }

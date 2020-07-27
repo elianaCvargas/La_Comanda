@@ -17,20 +17,20 @@ include_once __DIR__ . '/../Common/Dto/ClienteDto.php';
 class SocioLogic
 {
   public function Crear(ClienteDto $dto)
-  {
-    $errores = [];
-    $erroresUsuario = ValidationHelper::ValidarUsuarioRequest($dto->nombre, $dto->apellido, $dto->username);
+ {
+  //   $errores = [];
+  //   $erroresUsuario = ValidationHelper::ValidarUsuarioRequest($dto->nombre, $dto->apellido, $dto->username);
 
-    if (count($erroresUsuario) > 0) {
-      foreach($errores as $error)
-      {
-        echo $error."\n";
-      }
+  //   if (count($erroresUsuario) > 0) {
+  //     foreach($errores as $error)
+  //     {
+  //       echo $error."\n";
+  //     }
 
-      return;
-    }
+  //     return;
+  //   }
 
-    $usuarioNuevo = UsuarioMapping::ToSocio($dto);
-    UsuarioDb::createSocio($usuarioNuevo);
+    // $usuarioNuevo = UsuarioMapping:($dto);
+    // UsuarioDb::createSocio($usuarioNuevo);
   }
 }

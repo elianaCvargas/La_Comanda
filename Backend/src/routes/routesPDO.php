@@ -11,11 +11,14 @@ return function (App $app) {
     $container = $app->getContainer();  
     $app->group('/empleado', function ($app) {   
         $this->post('', EmpleadoController::class . ':Crear');   
-        $this->put('', EmpleadoController::class . ':Editar');   
     });
 
     $app->group('/empleado', function ($app) {   
         $this->put('', EmpleadoController::class . ':Modificar');   
+    });
+
+    $app->group('/empleado', function ($app) {   
+        $this->delete('', EmpleadoController::class . ':Eliminar');   
     });
 
     $app->group('/socio', function ($app) {   
@@ -24,5 +27,9 @@ return function (App $app) {
 
     $app->group('/socio', function ($app) {   
         $this->put('', SocioController::class . ':Modificar');   
+    });
+
+    $app->group('/socio', function ($app) {   
+        $this->delete('', SocioController::class . ':Eliminar');   
     });
 };

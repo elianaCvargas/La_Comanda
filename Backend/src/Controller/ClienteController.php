@@ -19,14 +19,13 @@ include_once __DIR__ . '/../Controller/BaseController.php';
 
 class ClienteController extends BaseController
 {
-<<<<<<< HEAD
     // public function Crear($request, $response, $args) {
     //   $datosArray = $request->getParsedBody();
-    //   if($this->ValidateRequest($datosArray, ["nombre", "apellido", "username"]))
+    //   if($this->ValidateCreateRequest($datosArray, ["nombre", "apellido", "username"]))
     //   {
     //     $user = json_encode($datosArray);
     //     $this->ValidarDatosEntrada($datosArray);
-    //     $usuarioDto = UsuarioDtoMapping::ToClienteDto($user);
+    //     $usuarioDto = UsuarioDtoMapping::($user);
     //     $usuarioLogic = new UsuarioLogic();
     //     $usuarioLogic->Crear($usuarioDto);
     //   } 
@@ -34,21 +33,5 @@ class ClienteController extends BaseController
     //     echo "Faltan definir los campos";
     //   }  
     // }
-=======
-    public function Crear($request, $response, $args) {
-      $datosArray = $request->getParsedBody();
-      if($this->ValidateCreateRequest($datosArray, ["nombre", "apellido", "username"]))
-      {
-        $user = json_encode($datosArray);
-        $this->ValidarDatosEntrada($datosArray);
-        $usuarioDto = UsuarioDtoMapping::($user);
-        $usuarioLogic = new UsuarioLogic();
-        $usuarioLogic->Crear($usuarioDto);
-      } 
-      else{
-        echo "Faltan definir los campos";
-      }  
-    }
->>>>>>> 1988b88b213642c17af1245daca2d0a0beaa6e95
    
 }
