@@ -21,8 +21,6 @@ class Pedido
     private $puntajeMozo;
     private $puntajeMesa;
 
-
-
     public function __construct($id, $codigo, $nombreCliente, $foto, $estado, $tiempoEstimado, $mesaId, $mozoId, $puntajeMozo, $puntajeMesa)
     {
         $this->id = $id;

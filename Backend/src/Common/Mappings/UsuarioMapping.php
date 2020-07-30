@@ -18,17 +18,19 @@ class UsuarioMapping{
 		return $usuario;
 	}
 
+	
+
+	public static function ToSocio(SocioDto $dto): Socio
+	{
+		$usuario = new Socio($dto->id, $dto->nombre, $dto->apellido, $dto->username);
+		return $usuario;
+	}
+
 	public static function dbDataToUsuario($data) : Usuario
 	{
 		$usuario = new Usuario(intval($data->Id), $data->Nombre, $data->Apellido, $data->Username);
 		$usuario->setRolUsuarioID($data->RolUsuarioID);
 
-		return $usuario;
-	}
-
-	public static function ToSocio(SocioDto $dto): Socio
-	{
-		$usuario = new Socio($dto->id, $dto->nombre, $dto->apellido, $dto->username);
 		return $usuario;
 	}
 

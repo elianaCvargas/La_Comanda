@@ -42,6 +42,7 @@ abstract class UsuarioDb extends db
 
 	public static function createSocio(Socio $socio)
 	{
+		var_dump($socio);
 		UsuarioDb::createUser($socio, null);
 	}
 

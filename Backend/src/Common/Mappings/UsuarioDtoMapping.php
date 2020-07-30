@@ -34,11 +34,14 @@ class UsuarioDtoMapping{
                 return $empleadoDto;
         }
 
-	public static function ToSocioDto($data) : SocioDto
+	public static function ToSocioDto($data, $modificar) : SocioDto
 	{
-		$obj = json_decode($data);
+                $obj = json_decode($data);
                 $empleadoDto = new SocioDto();
-                $empleadoDto->id  = $obj->id;
+                if($modificar)
+                {
+                        $empleadoDto->id  = $obj->id;
+                }
 		$empleadoDto->nombre  = $obj->nombre;
 		$empleadoDto->apellido  = $obj->apellido;
 		$empleadoDto->username  = $obj->username;

@@ -1,50 +1,72 @@
 <?php
+
 namespace Model;
-class Producto{
+
+class Producto
+{
+    //private $descripcion; no lo agregamos, pero porque no parece pedirlo o parece no ser necesario
     private $id;
     private $nombre;
     private $tiempoEstimado;
     private $tipo;
     private $precio;
 
-    public function getId() {
+    public function __construct($id, $nombre, $tiempoEstimado, $tipo, $precio)
+    {
+        $this->id = $id;
+        $this->nombre = $nombre;
+        $this->tiempoEstimado = $tiempoEstimado; 
+        $this->tipo = $tipo;
+        $this->precio = $precio;
+    }
+    
+    public function getId()
+    {
         return $this->id;
     }
 
-    public function setId($id) {
+    public function setId($id)
+    {
         $this->id = $id;
     }
 
-    public function getNombre() {
+    public function getNombre()
+    {
         return $this->nombre;
     }
 
-    public function setNombre($nombre) {
+    public function setNombre($nombre)
+    {
         $this->nombre = $nombre;
     }
 
-    public function getTiempoEstimado() {
+    public function getTiempoEstimado()
+    {
         return $this->tiempoEstimado;
     }
 
-    public function setTiempoEstimado($tiempoEstimado) {
+    public function setTiempoEstimado($tiempoEstimado)
+    {
         $this->tiempoEstimado = $tiempoEstimado;
     }
 
-    public function getTipo() {
+    public function getTipo()
+    {
         return $this->tipo;
     }
 
-    public function setTipo($tipo) {
+    public function setTipo($tipo)
+    {
         $this->tipo = $tipo;
     }
 
-    public function getPrecio() {
+    public function getPrecio()
+    {
         return $this->precio;
     }
 
-    public function setPrecio($precio) {
+    public function setPrecio($precio)
+    {
         $this->precio = $precio;
     }
 }
-?>

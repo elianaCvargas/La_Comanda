@@ -14,7 +14,6 @@ use Logic\EmpleadoLogic;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-include_once __DIR__ . '/../Model/cliente.php';
 include_once __DIR__ . '/../Common/Dto/UsuarioDto.php';
 include_once __DIR__ . '/../Logic/UsuarioLogic.php';
 include_once __DIR__ . '/../Logic/EmpleadoLogic.php';

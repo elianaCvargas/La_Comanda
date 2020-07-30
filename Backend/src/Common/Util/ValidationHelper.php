@@ -1,70 +1,143 @@
 <?php
+
 namespace Common\Util;
 
 use Common\Dto\UsuarioDto;
 use Common\Dto\EmpleadoDto;
+use Common\Dto\ProductoDto;
+use Common\Dto\MesaDto;
+use Model\Producto;
 use PHPUnit\Framework\Constraint\IsEmpty;
 
-include_once __DIR__ . '/../Dto/UsuarioDto.php'; 
-include_once __DIR__ . '/../Dto/EmpleadoDto.php'; 
+include_once __DIR__ . '/../Dto/UsuarioDto.php';
+include_once __DIR__ . '/../Dto/EmpleadoDto.php';
 
 abstract class ValidationHelper
 {
-    public static function ValidarCreateEmpleadoRequest(EmpleadoDto $dto)
-    {
-        $errores = [];
+  //Usuarios
+  public static function ValidarCreateEmpleadoRequest(EmpleadoDto $dto)
+  {
+    $errores = [];
 
-        if($dto->rolEmpleado === "" || $dto->rolEmpleado === null)
-        {
-            array_push( $errores, "Debe ingresar un Rol.");
-        }
-
-      return $errores;
+    if ($dto->rolEmpleado === "" || $dto->rolEmpleado === null) {
+      array_push($errores, "Debe ingresar un Rol.");
     }
 
-    public static function ValidarCreateUsuarioRequest($nombre, $apellido, $username) 
-    {
-        $errores = [];
-        if($nombre === "" || $nombre === null)
-        {
-           array_push( $errores, "Debe ingresar un nombre.");
-        }
+    return $errores;
+  }
 
-        if($apellido === "" || $apellido === null)
-        {
-            array_push($errores, "Debe ingresar un apellido.");
-        }
-              if($username === "" || $username === null)
-        {
-            array_push( $errores, "Debe ingresar un email.");
-        }
-
-
-      return $errores;
+  public static function ValidarCreateUsuarioRequest($nombre, $apellido, $username)
+  {
+    $errores = [];
+    if ($nombre === "" || $nombre === null) {
+      array_push($errores, "Debe ingresar un nombre.");
     }
 
-    public static function ValidarModifyUsuarioRequest($id, $nombre, $apellido, $username) 
-    {
-        $errores = [];
-        if($id === "") {
-            array_push( $errores, "Debe ingresar un id.");
-        }
-
-        if($nombre === "" && $apellido === "" && $username === "")
-        {
-           array_push( $errores, "Debe modificar al menos un campo.");
-        }
-
-      return $errores;
+    if ($apellido === "" || $apellido === null) {
+      array_push($errores, "Debe ingresar un apellido.");
+    }
+    if ($username === "" || $username === null) {
+      array_push($errores, "Debe ingresar un email.");
     }
 
-    public static function ValidarDeleteUsuarioRequest($id) 
-    {
-        $errores = [];
-        if($id === "") {
-            array_push( $errores, "Debe ingresar un id.");
-        }
 
-      return $errores;
+    return $errores;
+  }
+
+  public static function ValidarModifyUsuarioRequest($id, $nombre, $apellido, $username)
+  {
+    $errores = [];
+    if ($id === "") {
+      array_push($errores, "Debe ingresar un id.");
     }
+
+    if ($nombre === "" && $apellido === "" && $username === "") {
+      array_push($errores, "Debe modificar al menos un campo.");
+    }
+
+    return $errores;
+  }
+
+  public static function ValidarDeleteUsuarioRequest($id)
+  {
+    $errores = [];
+    if ($id === "") {
+      array_push($errores, "Debe ingresar un id.");
+    }
+
+    return $errores;
+  }
+
+  //Productos
+  public static function ValidarCreateProductoRequest(ProductoDto $productoDto)
+  {
+    $errores = [];
+
+    if ($productoDto->nombre === "" || $productoDto->nombre === null) {
+      array_push($errores, "Debe ingresar un nombre para el producto.");
+    }
+
+    if ($productoDto->tiempoEstimado === "" || $productoDto->tiempoEstimado === null) {
+      array_push($errores, "Debe ingresar un tiempo estimado de preparacion.");
+    }
+    if ($productoDto->tipo === "" || $productoDto->tipo === null) {
+      array_push($errores, "Debe asignar el tipo de producto.");
+    }
+
+    if ($productoDto->precio === "" || $productoDto->precio === null) {
+      array_push($errores, "Debe asignar el precio de producto.");
+    }
+
+    return $errores;
+  }
+
+  public static function ValidarModifyProductoRequest($id)
+  {
+    $errores = [];
+    if ($id === "") {
+      array_push($errores, "Debe ingresar un id.");
+    }
+
+    return $errores;
+  }
+
+  //Mesa
+  public static function ValidarCreateMesaRequest(MesaDto $mesaDto)
+  {
+    $errores = [];
+
+    // if ($mesaDto->codigo === "" || $mesaDto->codigo === null) {
+    //   array_push($errores, "Debe ingresar un codigo para la mesa.");
+    // }
+
+    if ($mesaDto->estado === "" || $mesaDto->estado === null) {
+      array_push($errores, "Debe ingresar un estado.");
+    }
+
+    return $errores;
+  }
+
+  public static function ValidarModifyMesaRequest($data)
+  {
+    $errores = [];
+    if ($data->id === "") {
+      array_push($data->$errores, "Debe ingresar un id.");
+    }
+
+    if ($data->codigo === "" && $data->estado === "") {
+      array_push($errores, "Debe modificar al menos un campo.");
+    }
+
+    return $errores;
+  }
+  
+  public static function ValidarDeleteMesaRequest($id)
+  {
+    $errores = [];
+    if ($id === "") {
+      array_push($errores, "Debe ingresar un id.");
+    }
+
+    return $errores;
+  }
 }

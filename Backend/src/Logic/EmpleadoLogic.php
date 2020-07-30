@@ -42,11 +42,10 @@ class EmpleadoLogic
 
   public function Modificar(EmpleadoDto $dto)
   {
-    $errores = [];
     $erroresUsuario = ValidationHelper::ValidarModifyUsuarioRequest($dto->id, $dto->nombre, $dto->apellido, $dto->username);
 
     if (count($erroresUsuario) > 0) {
-      foreach($errores as $error)
+      foreach($erroresUsuario as $error)
       {
         echo $error."\n";
       }

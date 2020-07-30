@@ -8,7 +8,6 @@ use Common\ExceptionManager\ApplicationException;
 use Logic\EmpleadoLogic;
 use Logic\SocioLogic;
 
-include_once __DIR__ . '/../Model/cliente.php';
 include_once __DIR__ . '/../Common/Dto/UsuarioDto.php';
 include_once __DIR__ . '/../Logic/UsuarioLogic.php';
 include_once __DIR__ . '/../Logic/EmpleadoLogic.php';
@@ -26,9 +25,9 @@ class SocioController extends BaseController
         $this->ValidateCreateRequest($datosArray, ["nombre", "apellido", "username"])
       ) {
         $user = json_encode($datosArray);
-        $ocioDto = UsuarioDtoMapping::ToSocioDto($user);
+        $socioDto = UsuarioDtoMapping::ToSocioDto($user, true);
         $ocioLogic = new SocioLogic();
-        $ocioLogic->Crear($ocioDto);
+        $ocioLogic->Crear($socioDto);
       } else {
         echo "Faltan definir los campos";
       }
@@ -47,7 +46,7 @@ class SocioController extends BaseController
         $this->ValidateModifyRequest($datosArray, "id", ["nombre", "apellido", "username"])
       ) {
         $user = json_encode($datosArray);
-       $socioDto = UsuarioDtoMapping::ToSocioDto($user);
+       $socioDto = UsuarioDtoMapping::ToSocioDto($user,true);
        $socioLogic = new SocioLogic();
        $socioLogic->Modificar($socioDto);
       } else {
