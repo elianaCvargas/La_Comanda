@@ -40,11 +40,9 @@ abstract class PedidoDb extends db
                 $pedido->getEstado(),
                 $pedido->getMesaId(),
                 $pedido->getMozoId(),
-                $pedido->getpuntajeMozo(),
-                $pedido->getpuntajeMesa()
             ));
         } catch (Exception $e) {
-            
+            throw new Exception("No se pudo insertar en la base de datos", 1);
         } 
     }
 

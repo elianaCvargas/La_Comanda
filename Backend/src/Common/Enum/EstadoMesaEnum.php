@@ -4,9 +4,9 @@ namespace Common\Enum;
 
 abstract class Enum_EstadoMesa{
     const Abierta = 1;
+    const EsperandoPedido = 2;
     const Comiendo = 3;
     const Pagando = 4;
-    const EsperandoPedido = 2;
     const Cerrada = 5;
 }
 ?>

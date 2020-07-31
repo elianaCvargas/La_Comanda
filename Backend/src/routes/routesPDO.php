@@ -6,12 +6,14 @@ use Controller\SocioController;
 use Controller\ProductoController;
 use Controller\MesaController;
 use Controller\PedidoController;
+use Controller\FileController;
 
 include_once __DIR__ . '/../Controller/EmpleadoController.php';
 include_once __DIR__ . '/../Controller/SocioController.php';
 include_once __DIR__ . '/../Controller/ProductoController.php';
 include_once __DIR__ . '/../Controller/MesaController.php';
 include_once __DIR__ . '/../Controller/PedidoController.php';
+include_once __DIR__ . '/../Controller/FileController.php';
 
 return function (App $app) {
     $container = $app->getContainer();  
@@ -44,5 +46,11 @@ return function (App $app) {
         $this->post('', PedidoController::class . ':Crear');   
         $this->put('', PedidoController::class . ':Modificar');   
         $this->delete('', PedidoController::class . ':Eliminar');   
+    });
+
+    $app->group('/file', function ($app) {   
+        $this->post('', FileController::class . ':subirFoto');   
+        // $this->put('', PedidoController::class . ':Modificar');   
+        // $this->delete('', PedidoController::class . ':Eliminar');   
     });
 };

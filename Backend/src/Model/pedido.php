@@ -20,6 +20,7 @@ class Pedido
     private $mozoId;
     private $puntajeMozo;
     private $puntajeMesa;
+    private $detallePedido = [];
 
     public function __construct($id, $codigo, $nombreCliente, $foto, $estado, $tiempoEstimado, $mesaId, $mozoId, $puntajeMozo, $puntajeMesa)
     {
@@ -33,7 +34,7 @@ class Pedido
         $this->mozoId = $mozoId;
         $this->puntajeMesa = $puntajeMesa;
         $this->puntajeMozo = $puntajeMozo;
-    }
+    } 
 
      public function getId() {
          return $this->id;

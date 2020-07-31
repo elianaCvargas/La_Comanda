@@ -27,38 +27,35 @@ abstract class MesaDb extends db
                 $mesa->getEstado(),
             ));
         } catch (Exception $e) {
-            
-        } 
+        }
     }
 
     public static function modify(Mesa $mesa)
     {
-         try {
-        $updateFields = DbQueryBuilder::BuildUpdateFields(
-            [ 'Codigo', 'Estado'],
-            [$mesa->getCodigo(), $mesa->getEstado()]
-        );
+        try {
+            $updateFields = DbQueryBuilder::BuildUpdateFields(
+                ['Codigo', 'Estado'],
+                [$mesa->getCodigo(), $mesa->getEstado()]
+            );
 
-        $SQL = 'UPDATE mesas SET ' . $updateFields . ' WHERE Id=?';
-        $result = db::connect()->prepare($SQL);
-        $result->execute(array(
-            $mesa->getId()
-        ));
-
+            $SQL = 'UPDATE mesas SET ' . $updateFields . ' WHERE Id=?';
+            $result = db::connect()->prepare($SQL);
+            $result->execute(array(
+                $mesa->getId()
+            ));
         } catch (Exception $e) {
-        } 
+        }
     }
 
 
     public static function delete(int $id)
     {
-     try {
-        $SQL = 'DELETE FROM mesas WHERE Id=?';
-        $result = db::connect()->prepare($SQL);
-        $result->execute(array(
-            $id
-        ));
-
+        try {
+            $SQL = 'DELETE FROM mesas WHERE Id=?';
+            $result = db::connect()->prepare($SQL);
+            $result->execute(array(
+                $id
+            ));
         } catch (Exception $e) {
         }
     }
@@ -75,6 +72,19 @@ abstract class MesaDb extends db
             return MesaMapping::dbDataToMesa($data);
         } else {
             throw new ApplicationException("No existe la Mesa");
+        }
+    }
+
+    public static function alterarEstadoMesa(int $mesaId, int $estado)
+    {
+        try {
+            $SQL = 'UPDATE mesas SET EstadoMesaId = ?  WHERE  Id = ?';
+            $result = db::connect()->prepare($SQL);
+            $result->execute(array(
+                $estado,
+                $mesaId
+            ));
+        } catch (Exception $e) {
         }
     }
 }

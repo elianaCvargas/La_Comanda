@@ -72,6 +72,11 @@ class MesaLogic
     }
   }
 
+  public function alterarEstadoMesa(int $mesaId, int $estado)
+  {
+      MesaDb::alterarEstadoMesa($mesaId, $estado);
+  }
+
   private function GenerateAlphanumericCode(): string
   {
     $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
