@@ -6,6 +6,7 @@ use Common\Dto\UsuarioDto;
 use Common\Dto\EmpleadoDto;
 use Common\Dto\ProductoDto;
 use Common\Dto\MesaDto;
+use Common\Dto\PedidoDto;
 use Model\Producto;
 use PHPUnit\Framework\Constraint\IsEmpty;
 
@@ -130,7 +131,7 @@ abstract class ValidationHelper
 
     return $errores;
   }
-  
+
   public static function ValidarDeleteMesaRequest($id)
   {
     $errores = [];
@@ -140,4 +141,48 @@ abstract class ValidationHelper
 
     return $errores;
   }
+
+  //Pedido
+  public static function ValidarCreatePedidoRequest(PedidoDto $pedidoDto)
+  {
+    $errores = [];
+    if ($pedidoDto->nombreCliente === "" || $pedidoDto->nombreCliente === null) {
+      array_push($errores, "Debe ingresar un nombre del  cliente.");
+    }
+    if ($pedidoDto->estado === "" || $pedidoDto->estado === null) {
+      array_push($errores, "Debe cambiar el estado.");
+    }
+    if ($pedidoDto->mesaId === "" || $pedidoDto->mesaId === null) {
+      array_push($errores, "Debe ingresar una mesa.");
+    }
+    if ($pedidoDto->mozoId === "" || $pedidoDto->mozoId === null) {
+      array_push($errores, "Debe ingresar un mozo.");
+    }
+
+    return $errores;
+  }
+
+  // public static function ValidarModifyPedidoRequest($data)
+  // {
+  //   $errores = [];
+  //   if ($data->id === "") {
+  //     array_push($data->$errores, "Debe ingresar un id.");
+  //   }
+
+  //   if ($data->codigo === "" && $data->estado === "") {
+  //     array_push($errores, "Debe modificar al menos un campo.");
+  //   }
+
+  //   return $errores;
+  // }
+
+  // public static function ValidarDeletePedidoRequest($id)
+  // {
+  //   $errores = [];
+  //   if ($id === "") {
+  //     array_push($errores, "Debe ingresar un id.");
+  //   }
+
+  //   return $errores;
+  // }
 }

@@ -23,7 +23,7 @@ class DetallePedido
     }
 
     public function getPedido() {
-        return $this->Pedido;
+        return $this->pedido;
     }
 
     public function setPedido($pedido) {
@@ -31,7 +31,7 @@ class DetallePedido
     }
 
     public function getResponsable() {
-        return $this->Responsable;
+        return $this->responsable;
     }
 
     public function setResponsable($responsable) {
@@ -39,7 +39,7 @@ class DetallePedido
     }
 
     public function getEstado() {
-        return $this->Estado;
+        return $this->estado;
     }
 
     public function setEstado($estado) {
@@ -47,7 +47,7 @@ class DetallePedido
     }
 
     public function getInicio() {
-        return $this->Inicio;
+        return $this->inicio;
     }
 
     public function setInicio($inicio) {
@@ -55,7 +55,7 @@ class DetallePedido
     }
 
     public function getFin() {
-        return $this->Fin;
+        return $this->fin;
     }
 
     public function setFin($fin) {
@@ -63,7 +63,7 @@ class DetallePedido
     }
 
     public function getProductoId() {
-        return $this->ProductoId;
+        return $this->productoId;
     }
 
     public function setProductoId($productoId) {
