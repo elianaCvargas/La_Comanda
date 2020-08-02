@@ -3,6 +3,7 @@
 namespace Logic;
 
 use Common\Dto\EmpleadoDto;
+use Common\Dto\ResultDto;
 use Common\Enum\Enum_RolesEmpleados;
 use Common\Enum\Enum_RolesUsuarios;
 use Common\ExceptionManager\ApplicationException;
@@ -29,11 +30,7 @@ class EmpleadoLogic
 
     if (count($erroresUsuario) > 0 || $erroresEmpleado > 0) {
       $errores = array_merge($erroresUsuario, $erroresEmpleado);
-      foreach($errores as $error)
-      {
-        echo $error."\n";
-        return "";
-      }
+      return new ResultDto($errores, false, "Crear empleado");
     }
 
     $usuarioNuevo = UsuarioMapping::ToEmpleado($dto);

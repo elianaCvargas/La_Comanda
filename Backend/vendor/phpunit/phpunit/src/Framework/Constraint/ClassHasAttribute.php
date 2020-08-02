@@ -9,7 +9,7 @@
  */
 namespace PHPUnit\Framework\Constraint;
 
-use ReflectionClass;
+use PHPUnit\Framework\Exception;
 
 /**
  * Constraint that asserts that the class it is evaluated for has a given
@@ -45,12 +45,20 @@ class ClassHasAttribute extends Constraint
      * constraint is met, false otherwise.
      *
      * @param mixed $other value or object to evaluate
-     *
-     * @throws \ReflectionException
      */
     protected function matches($other): bool
     {
-        return (new ReflectionClass($other))->hasProperty($this->attributeName);
+        try {
+            return (new \ReflectionClass($other))->hasProperty($this->attributeName);
+            // @codeCoverageIgnoreStart
+        } catch (\ReflectionException $e) {
+            throw new Exception(
+                $e->getMessage(),
+                (int) $e->getCode(),
+                $e
+            );
+        }
+        // @codeCoverageIgnoreEnd
     }
 
     /**

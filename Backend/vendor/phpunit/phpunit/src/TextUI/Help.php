@@ -97,10 +97,11 @@ final class Help
             ['arg'    => '--testdox', 'desc' => 'Report test execution progress in TestDox format'],
             ['arg'    => '--testdox-group', 'desc' => 'Only include tests from the specified group(s)'],
             ['arg'    => '--testdox-exclude-group', 'desc' => 'Exclude tests from the specified group(s)'],
+            ['arg'    => '--no-interaction', 'desc' => 'Disable TestDox progress animation'],
             ['arg'    => '--printer <printer>', 'desc' => 'TestListener implementation to use'],
             ['spacer' => ''],
 
-            ['arg'  => '--order-by=<order>', 'desc' => 'Run tests in order: default|reverse|random|defects|no-depends'],
+            ['arg'  => '--order-by=<order>', 'desc' => 'Run tests in order: default|defects|duration|no-depends|random|reverse|size'],
             ['arg'  => '--random-order-seed=<N>', 'desc' => 'Use a specific random seed <N> for random order'],
             ['arg'  => '--cache-result', 'desc' => 'Write test results to cache file'],
             ['arg'  => '--do-not-cache-result', 'desc' => 'Do not write test results to cache file'],
@@ -155,10 +156,10 @@ final class Help
             $this->hasColor = $withColor;
         }
 
-        foreach (self::HELP_TEXT as $section => $options) {
+        foreach (self::HELP_TEXT as $options) {
             foreach ($options as $option) {
                 if (isset($option['arg'])) {
-                    $this->maxArgLength = \max($this->maxArgLength, \strlen($option['arg']) ?? 0);
+                    $this->maxArgLength = \max($this->maxArgLength, isset($option['arg']) ? \strlen($option['arg']) : 0);
                 }
             }
         }
@@ -224,7 +225,7 @@ final class Help
                     $arg = Color::colorize('fg-green', \str_pad($option['arg'], $this->maxArgLength));
                     $arg = \preg_replace_callback(
                         '/(<[^>]+>)/',
-                        function ($matches) {
+                        static function ($matches) {
                             return Color::colorize('fg-cyan', $matches[0]);
                         },
                         $arg

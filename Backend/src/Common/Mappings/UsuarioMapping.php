@@ -14,7 +14,7 @@ include_once __DIR__ . '/../../Model/Socio.php';
 class UsuarioMapping{	
 	public static function ToEmpleado(EmpleadoDto $dto): Empleado
 	{
-		$usuario = new Empleado($dto->id, $dto->nombre, $dto->apellido, $dto->rolEmpleado, $dto->username);
+		$usuario = new Empleado($dto->id, $dto->nombre, $dto->apellido, $dto->rolEmpleado, $dto->username, $dto->password);
 		return $usuario;
 	}
 
@@ -28,7 +28,7 @@ class UsuarioMapping{
 
 	public static function dbDataToUsuario($data) : Usuario
 	{
-		$usuario = new Usuario(intval($data->Id), $data->Nombre, $data->Apellido, $data->Username);
+		$usuario = new Usuario(intval($data->Id), $data->Nombre, $data->Apellido, $data->Username,$data->Password);
 		$usuario->setRolUsuarioID($data->RolUsuarioID);
 
 		return $usuario;
@@ -36,7 +36,8 @@ class UsuarioMapping{
 
 	public static function usuarioToEmpleado(Usuario $usuario, $rolEmpleado): Empleado
 	{
-		$usuario = new Empleado($usuario->getId(), $usuario->getNombre(), $usuario->getApellido(), $rolEmpleado, $usuario->getUsername());
+		$usuario = new Empleado($usuario->getId(), $usuario->getNombre()
+		, $usuario->getApellido(), $rolEmpleado, $usuario->getUsername(), $usuario->getPassword());
 		return $usuario;
 	}
 }

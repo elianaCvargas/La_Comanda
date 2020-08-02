@@ -5,6 +5,5 @@ namespace Common\Dto;
 
 class CrearEmpleadoResultDto extends ResultDto
 {
-    //si tiene error devolver un 400 error
-    //sino un success
+
 }

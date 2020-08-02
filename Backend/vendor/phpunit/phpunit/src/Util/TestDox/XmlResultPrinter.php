@@ -19,7 +19,6 @@ use PHPUnit\Framework\TestListener;
 use PHPUnit\Framework\TestSuite;
 use PHPUnit\Framework\Warning;
 use PHPUnit\Util\Printer;
-use ReflectionClass;
 
 /**
  * @internal This class is not covered by the backward compatibility promise for PHPUnit
@@ -144,7 +143,6 @@ final class XmlResultPrinter extends Printer implements TestListener
      * A test ended.
      *
      * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
-     * @throws \ReflectionException
      */
     public function endTest(Test $test, float $time): void
     {
@@ -152,11 +150,9 @@ final class XmlResultPrinter extends Printer implements TestListener
             return;
         }
 
-        /* @var TestCase $test */
-
         $groups = \array_filter(
             $test->getGroups(),
-            function ($group) {
+            static function ($group) {
                 return !($group === 'small' || $group === 'medium' || $group === 'large');
             }
         );
@@ -206,7 +202,7 @@ final class XmlResultPrinter extends Printer implements TestListener
             $testNode->appendChild($testDoubleNode);
         }
 
-        $inlineAnnotations = \PHPUnit\Util\Test::getInlineAnnotations(\get_class($test), $test->getName());
+        $inlineAnnotations = \PHPUnit\Util\Test::getInlineAnnotations(\get_class($test), $test->getName(false));
 
         if (isset($inlineAnnotations['given'], $inlineAnnotations['when'], $inlineAnnotations['then'])) {
             $testNode->setAttribute('given', $inlineAnnotations['given']['value']);
@@ -224,7 +220,17 @@ final class XmlResultPrinter extends Printer implements TestListener
                 $steps = $this->exception->getTrace();
             }
 
-            $file  = (new ReflectionClass($test))->getFileName();
+            try {
+                $file = (new \ReflectionClass($test))->getFileName();
+                // @codeCoverageIgnoreStart
+            } catch (\ReflectionException $e) {
+                throw new Exception(
+                    $e->getMessage(),
+                    (int) $e->getCode(),
+                    $e
+                );
+            }
+            // @codeCoverageIgnoreEnd
 
             foreach ($steps as $step) {
                 if (isset($step['file']) && $step['file'] === $file) {

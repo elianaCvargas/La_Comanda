@@ -38,17 +38,17 @@ final class PhptTestCase implements SelfDescribing, Test
         'auto_prepend_file=',
         'disable_functions=',
         'display_errors=1',
-        'docref_root=',
         'docref_ext=.html',
+        'docref_root=',
         'error_append_string=',
         'error_prepend_string=',
         'error_reporting=-1',
         'html_errors=0',
         'log_errors=0',
         'magic_quotes_runtime=0',
-        'output_handler=',
         'open_basedir=',
         'output_buffering=Off',
+        'output_handler=',
         'report_memleaks=0',
         'report_zend_debug=0',
         'safe_mode=0',
@@ -102,7 +102,6 @@ final class PhptTestCase implements SelfDescribing, Test
      * Runs a test and collects its result in a TestResult instance.
      *
      * @throws Exception
-     * @throws \ReflectionException
      * @throws \SebastianBergmann\CodeCoverage\CoveredCodeNotExecutedException
      * @throws \SebastianBergmann\CodeCoverage\InvalidArgumentException
      * @throws \SebastianBergmann\CodeCoverage\MissingCoversAnnotationException
@@ -180,7 +179,7 @@ final class PhptTestCase implements SelfDescribing, Test
         }
 
         try {
-            $this->assertPhptExpectation($sections, $jobResult['stdout']);
+            $this->assertPhptExpectation($sections, $this->output);
         } catch (AssertionFailedError $e) {
             $failure = $e;
 
@@ -398,20 +397,20 @@ final class PhptTestCase implements SelfDescribing, Test
         $section  = '';
 
         $unsupportedSections = [
-            'REDIRECTTEST',
-            'REQUEST',
-            'POST',
-            'PUT',
-            'POST_RAW',
-            'GZIP_POST',
-            'DEFLATE_POST',
-            'GET',
-            'COOKIE',
-            'HEADERS',
             'CGI',
+            'COOKIE',
+            'DEFLATE_POST',
             'EXPECTHEADERS',
             'EXTENSIONS',
+            'GET',
+            'GZIP_POST',
+            'HEADERS',
             'PHPDBG',
+            'POST',
+            'POST_RAW',
+            'PUT',
+            'REDIRECTTEST',
+            'REQUEST',
         ];
 
         $lineNr = 0;
@@ -579,7 +578,7 @@ final class PhptTestCase implements SelfDescribing, Test
             $globals = '$GLOBALS[\'__PHPUNIT_BOOTSTRAP\'] = ' . \var_export(
                 $GLOBALS['__PHPUNIT_BOOTSTRAP'],
                 true
-                ) . ";\n";
+            ) . ";\n";
         }
 
         $template->setVar(

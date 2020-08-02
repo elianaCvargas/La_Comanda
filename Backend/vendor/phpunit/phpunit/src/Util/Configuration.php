@@ -126,23 +126,7 @@ final class Configuration
         $result = [];
 
         foreach ($this->xpath->query('extensions/extension') as $extension) {
-            \assert($extension instanceof DOMElement);
-
-            $class     = (string) $extension->getAttribute('class');
-            $file      = '';
-            $arguments = $this->getConfigurationArguments($extension->childNodes);
-
-            if ($extension->getAttribute('file')) {
-                $file = $this->toAbsolutePath(
-                    (string) $extension->getAttribute('file'),
-                    true
-                );
-            }
-            $result[] = [
-                'class'     => $class,
-                'file'      => $file,
-                'arguments' => $arguments,
-            ];
+            $result[] = $this->getElementConfigurationParameters($extension);
         }
 
         return $result;
@@ -238,24 +222,7 @@ final class Configuration
         $result = [];
 
         foreach ($this->xpath->query('listeners/listener') as $listener) {
-            \assert($listener instanceof DOMElement);
-
-            $class     = (string) $listener->getAttribute('class');
-            $file      = '';
-            $arguments = $this->getConfigurationArguments($listener->childNodes);
-
-            if ($listener->getAttribute('file')) {
-                $file = $this->toAbsolutePath(
-                    (string) $listener->getAttribute('file'),
-                    true
-                );
-            }
-
-            $result[] = [
-                'class'     => $class,
-                'file'      => $file,
-                'arguments' => $arguments,
-            ];
+            $result[] = $this->getElementConfigurationParameters($listener);
         }
 
         return $result;
@@ -834,24 +801,39 @@ final class Configuration
                         $result['resolveDependencies']   = false;
 
                         break;
-                    case 'reverse':
-                        $result['executionOrder'] = TestSuiteSorter::ORDER_REVERSED;
 
-                        break;
-                    case 'random':
-                        $result['executionOrder'] = TestSuiteSorter::ORDER_RANDOMIZED;
-
-                        break;
                     case 'defects':
                         $result['executionOrderDefects'] = TestSuiteSorter::ORDER_DEFECTS_FIRST;
 
                         break;
+
                     case 'depends':
                         $result['resolveDependencies'] = true;
 
                         break;
+
+                    case 'duration':
+                        $result['executionOrder'] = TestSuiteSorter::ORDER_DURATION;
+
+                        break;
+
                     case 'no-depends':
                         $result['resolveDependencies'] = false;
+
+                        break;
+
+                    case 'random':
+                        $result['executionOrder'] = TestSuiteSorter::ORDER_RANDOMIZED;
+
+                        break;
+
+                    case 'reverse':
+                        $result['executionOrder'] = TestSuiteSorter::ORDER_REVERSED;
+
+                        break;
+
+                    case 'size':
+                        $result['executionOrder'] = TestSuiteSorter::ORDER_SIZE;
 
                         break;
                 }
@@ -879,7 +861,6 @@ final class Configuration
      * Returns the test suite configuration.
      *
      * @throws Exception
-     * @throws \ReflectionException
      */
     public function getTestSuiteConfiguration(string $testSuiteFilter = ''): TestSuite
     {
@@ -973,7 +954,6 @@ final class Configuration
 
     /**
      * @throws \PHPUnit\Framework\Exception
-     * @throws \ReflectionException
      */
     private function getTestSuite(DOMElement $testSuiteNode, string $testSuiteFilter = ''): TestSuite
     {
@@ -1011,25 +991,14 @@ final class Configuration
                 continue;
             }
 
-            $prefix = '';
-            $suffix = 'Test.php';
-
             if (!$this->satisfiesPhpVersion($directoryNode)) {
                 continue;
             }
 
-            if ($directoryNode->hasAttribute('prefix')) {
-                $prefix = (string) $directoryNode->getAttribute('prefix');
-            }
-
-            if ($directoryNode->hasAttribute('suffix')) {
-                $suffix = (string) $directoryNode->getAttribute('suffix');
-            }
-
             $files = $fileIteratorFacade->getFilesAsArray(
                 $this->toAbsolutePath($directory),
-                $suffix,
-                $prefix,
+                $directoryNode->hasAttribute('suffix') ? (string) $directoryNode->getAttribute('suffix') : 'Test.php',
+                $directoryNode->hasAttribute('prefix') ? (string) $directoryNode->getAttribute('prefix') : '',
                 $exclude
             );
 
@@ -1082,7 +1051,7 @@ final class Configuration
             $phpVersionOperator = (string) $node->getAttribute('phpVersionOperator');
         }
 
-        return \version_compare(\PHP_VERSION, $phpVersion, $phpVersionOperator);
+        return \version_compare(\PHP_VERSION, $phpVersion, (new VersionComparisonOperator($phpVersionOperator))->asString());
     }
 
     /**
@@ -1129,27 +1098,11 @@ final class Configuration
                 continue;
             }
 
-            $prefix = '';
-            $suffix = '.php';
-            $group  = 'DEFAULT';
-
-            if ($directoryNode->hasAttribute('prefix')) {
-                $prefix = (string) $directoryNode->getAttribute('prefix');
-            }
-
-            if ($directoryNode->hasAttribute('suffix')) {
-                $suffix = (string) $directoryNode->getAttribute('suffix');
-            }
-
-            if ($directoryNode->hasAttribute('group')) {
-                $group = (string) $directoryNode->getAttribute('group');
-            }
-
             $directories[] = [
                 'path'   => $this->toAbsolutePath($directoryPath),
-                'prefix' => $prefix,
-                'suffix' => $suffix,
-                'group'  => $group,
+                'prefix' => $directoryNode->hasAttribute('prefix') ? (string) $directoryNode->getAttribute('prefix') : '',
+                'suffix' => $directoryNode->hasAttribute('suffix') ? (string) $directoryNode->getAttribute('suffix') : '.php',
+                'group'  => $directoryNode->hasAttribute('group') ? (string) $directoryNode->getAttribute('group') : 'DEFAULT',
             ];
         }
 
@@ -1228,5 +1181,25 @@ final class Configuration
         }
 
         return $groups;
+    }
+
+    private function getElementConfigurationParameters(DOMElement $element): array
+    {
+        $class     = (string) $element->getAttribute('class');
+        $file      = '';
+        $arguments = $this->getConfigurationArguments($element->childNodes);
+
+        if ($element->getAttribute('file')) {
+            $file = $this->toAbsolutePath(
+                (string) $element->getAttribute('file'),
+                true
+            );
+        }
+
+        return [
+            'class'     => $class,
+            'file'      => $file,
+            'arguments' => $arguments,
+        ];
     }
 }

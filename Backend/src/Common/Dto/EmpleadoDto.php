@@ -11,4 +11,5 @@ class EmpleadoDto
     public $dni;
     public $telefono;
     public $rolEmpleado;
+    public $password;
 }

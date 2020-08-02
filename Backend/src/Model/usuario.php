@@ -14,13 +14,15 @@ class Usuario implements JsonSerializable
     private $Apellido;
     private $RolUsuarioID;
     private $Username;
+    private $Password;
 
-    public function __construct($Id, $Nombre, $Apellido, $Username)
+    public function __construct($Id, $Nombre, $Apellido, $Username, $Password)
     {
         $this->Id = $Id;
         $this->Nombre = $Nombre;
         $this->Apellido = $Apellido;
         $this->Username = $Username;
+        $this->Password = $Password;
     }
 
     public function getId(): ?int
@@ -63,15 +65,15 @@ class Usuario implements JsonSerializable
         return $this->Username;
     }
 
-    // public function getDni(): ?int
-    // {
-    //     return $this->dni;
-    // }
+    public function getPassword(): string
+    {
+        return $this->Password;
+    }
 
-    // public function getTelefono(): ?int
-    // {
-    //     return $this->telefono;
-    // }
+    public function setPassord($password)
+    {
+        $this->Password = $password;
+    }
 
     public function jsonSerialize()
     {

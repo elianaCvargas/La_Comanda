@@ -42,7 +42,6 @@ abstract class UsuarioDb extends db
 
 	public static function createSocio(Socio $socio)
 	{
-		var_dump($socio);
 		UsuarioDb::createUser($socio, null);
 	}
 
@@ -129,6 +128,22 @@ abstract class UsuarioDb extends db
 		$result->execute(array(
 			$empleadoId
 		));
+		$data = $result->fetch(PDO::FETCH_OBJ);
+		if ($data) {
+			return UsuarioMapping::dbDataToUsuario($data);
+		} else {
+			throw new ApplicationException("No existe el usuario");
+		}
+	}
+
+	public static function getUsuarioByUsername($username): Usuario
+	{
+		$SQL = 'SELECT * FROM usuarios WHERE  Username = ?';
+		$result = db::connect()->prepare($SQL);
+		$result->execute(array(
+			$username
+		));
+
 		$data = $result->fetch(PDO::FETCH_OBJ);
 		if ($data) {
 			return UsuarioMapping::dbDataToUsuario($data);

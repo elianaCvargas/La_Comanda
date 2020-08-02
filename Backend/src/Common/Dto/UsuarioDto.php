@@ -6,9 +6,9 @@ namespace Common\Dto;
 use JsonSerializable;
 use Common\Enum\Enum_RolesUsuarios;
 
-// include_once __DIR__ . '/../../src/Common/Enum/RolesUsuariosEnum.php';
+ include_once __DIR__ . '/../Dto/Result.php';
 
-class UsuarioDto
+class UsuarioDto extends ResultDto
 {
     public $numeroCliente;
     public $nombre;

@@ -20,11 +20,18 @@ class FileController extends BaseController
     {
         try {
             $datosArray = $request->getUploadedFiles();
+            $data = $request->getParsedBody();
+            // var_dump($data);
+            // var_dump($datosArray);
             if ($this->ValidateCreateRequest($datosArray, ["foto"])) {
                 $file = $datosArray['foto'];
+                $file2 = $datosArray['foto2'];
+
                 $fullName = $file->getClientFilename();
+                $fullName2 = $file2->getClientFilename();
                 $fileLogic = new FileLogic();
                 $fileLogic->subirFoto($fullName,$file);
+                $fileLogic->subirFoto($fullName2,$file2);
                 
             } else {
                 echo "Faltan definir los campos";
