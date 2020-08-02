@@ -24,7 +24,7 @@ return function (App $app) {
     $app->group('/empleado', function ($app) {   
         $this->put('', EmpleadoController::class . ':Modificar');   
         $this->delete('', EmpleadoController::class . ':Eliminar');   
-        $this->post('', EmpleadoController::class . ':Crear')->add(new UserValidation());   
+        $this->post('', EmpleadoController::class . ':Crear');   
     });
 
     $app->group('/socio', function ($app) {   

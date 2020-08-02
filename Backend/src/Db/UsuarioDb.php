@@ -37,6 +37,8 @@ abstract class UsuarioDb extends db
 
 	public static function createEmpleado(Empleado $empleado)
 	{
+		var_dump($empleado);
+
 		UsuarioDb::createUser($empleado, $empleado->getUserRolEmpleado());
 	}
 
@@ -47,21 +49,21 @@ abstract class UsuarioDb extends db
 
 	private static function createUser(Usuario $user, ?int $rolEmpleado)
 	{
-		// try {
-		$SQL = 'INSERT INTO usuarios (Username,Nombre, Apellido, RolUsuarioID, RolEmpleadoID) VALUES (?,?,?,?,?)';
+		var_dump($user);
+	 try {
+		$SQL = 'INSERT INTO usuarios (Username,Nombre, Apellido, RolUsuarioID, RolEmpleadoID, Password) VALUES (?,?,?,?,?,?)';
 		$result = db::connect()->prepare($SQL);
 		$result->execute(array(
 			$user->getUserName(),
 			$user->getNombre(),
 			$user->getApellido(),
 			$user->getRolUsuarioID(),
-			$rolEmpleado
+			$rolEmpleado, 
+			$user->getPassword()
 		));
-		// } catch (Exception $e) {
-		// 	die('Error ClienteRepository(Create) '.$e->getMessage());
-		// } finally{
-		// 	$result = null;
-		// }
+		} catch (Exception $e) {
+			
+		} 
 	}
 
 	public static function modifyEmpleado(Empleado $empleado)

@@ -79,7 +79,7 @@ class AutentificadorJWT
         catch (Exception $e)
         {
             //echo "Clave fuera de tiempo";
-           throw new Exception("Clave fuera de tiempo");
+           throw new Exception("Token expirado");
         }
         
         // si no da error,  verifico los datos de AUD que uso para saber de que lugar viene  

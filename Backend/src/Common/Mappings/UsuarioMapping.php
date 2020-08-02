@@ -22,7 +22,7 @@ class UsuarioMapping{
 
 	public static function ToSocio(SocioDto $dto): Socio
 	{
-		$usuario = new Socio($dto->id, $dto->nombre, $dto->apellido, $dto->username);
+		$usuario = new Socio($dto->id, $dto->nombre, $dto->apellido, $dto->username, $dto->password);
 		return $usuario;
 	}
 

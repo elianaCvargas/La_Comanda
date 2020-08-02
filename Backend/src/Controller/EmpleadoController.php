@@ -28,10 +28,10 @@ class EmpleadoController extends BaseController
 
     try {
       $datosArray = $request->getParsedBody();
-      if ($this->ValidateCreateRequest($datosArray, ["nombre", "apellido", "username", "rolEmpleado"])) 
+      if ($this->ValidateCreateRequest($datosArray, ["nombre", "apellido", "username", "rolEmpleado", "password"])) 
       {
         $user = json_encode($datosArray);
-        $empladoDto = UsuarioDtoMapping::ToUserEmployeeDto($user);
+        $empladoDto = UsuarioDtoMapping::ToUserEmployeeDto($user, false);
         $empleadoLogic = new EmpleadoLogic();
         $empleadoLogic->Crear($empladoDto);
       } 
@@ -56,7 +56,7 @@ class EmpleadoController extends BaseController
         $this->ValidateModifyRequest($datosArray, "id", ["nombre", "apellido", "username"])
       ) {
         $user = json_encode($datosArray);
-        $empleadoDto = UsuarioDtoMapping::ToUserEmployeeDto($user);
+        $empleadoDto = UsuarioDtoMapping::ToUserEmployeeDto($user, true);
         $empleadoLogic = new EmpleadoLogic();
         $empleadoLogic->Modificar($empleadoDto);
         echo "Modificado con exito";

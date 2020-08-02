@@ -26,7 +26,7 @@ class EmpleadoLogic
   {
     $errores = [];
     $erroresEmpleado =  ValidationHelper::ValidarCreateEmpleadoRequest($dto);
-    $erroresUsuario = ValidationHelper::ValidarCreateUsuarioRequest($dto->nombre, $dto->apellido, $dto->username);
+    $erroresUsuario = ValidationHelper::ValidarCreateUsuarioRequest($dto->nombre, $dto->apellido, $dto->username, $dto->password);
 
     if (count($erroresUsuario) > 0 || $erroresEmpleado > 0) {
       $errores = array_merge($erroresUsuario, $erroresEmpleado);

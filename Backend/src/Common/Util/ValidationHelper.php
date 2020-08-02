@@ -27,7 +27,7 @@ abstract class ValidationHelper
     return $errores;
   }
 
-  public static function ValidarCreateUsuarioRequest($nombre, $apellido, $username)
+  public static function ValidarCreateUsuarioRequest($nombre, $apellido, $username, $password)
   {
     $errores = [];
     if ($nombre === "" || $nombre === null) {
@@ -40,8 +40,9 @@ abstract class ValidationHelper
     if ($username === "" || $username === null) {
       array_push($errores, "Debe ingresar un email.");
     }
-
-
+    if ($password === "" || $password === null) {
+      array_push($errores, "Debe ingresar un pass.");
+    }
     return $errores;
   }
 

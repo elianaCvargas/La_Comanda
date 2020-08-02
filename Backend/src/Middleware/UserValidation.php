@@ -4,21 +4,26 @@ namespace App\Middleware;
 use Common\Enum\Enum_RolesUsuarios;
 use Common\Util\AutentificadorJWT;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
 use Common\ExceptionManager\ApplicationException;
 
 use Slim\Http\Response as Response;
 
-// require __DIR__ . '/../vendor/autoload.php';
-
 
 class UserValidation 
 {
-
-    public function __invoke(Request $request, RequestHandlerInterface  $handler): Response
+     /**
+     * Example middleware invokable class
+     *
+     * @param  \Psr\Http\Message\ServerRequestInterface $request  PSR7 request
+     * @param  \Psr\Http\Message\ResponseInterface      $response PSR7 response
+     * @param  callable                                 $next     Next middleware
+     *
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function __invoke($request, $response, $next)
     {
         $tokenHeader = $request->getHeader('token');
-        var_dump($tokenHeader);
         $resCode = 200;
         $valid = AutentificadorJWT::checkToken($tokenHeader[0]);
         $tokenData = "";
@@ -30,24 +35,15 @@ class UserValidation
             $response->getBody()->write(json_encode(array("message" => 'Token inválido')));
             return $response->withStatus($resCode);
         }
-        if($tokenData->rolUsuario == Enum_RolesUsuarios::Empleado) {
-            // $data = [
-            //     'id' => $tokenData->id,
-            //     'user' => $tokenData->user,
-            //     'type' => $tokenData->type,
-            //     'pass' => $tokenData->pass
-            // ];
+
+        if($tokenData->rolUsuario == Enum_RolesUsuarios::Socio) {
             $request->withAttribute('rolUsuario', $tokenData->rolUsuario);
-            $response = $handler->handle($request->withAttribute('rolUsuario', $tokenData->rolUsuario));
-            $existingContent = (string) $response->getBody();
+            $response = $next($request, $response);
         } else {
-            $response->getBody()->write(json_encode(array("message" => 'No es User')));
+            $response->getBody()->write(json_encode(array("message" => 'No tiene permisos')));
             $resCode = 401;
             return $response->withStatus($resCode);
         }
-        
-        //$response->getBody()->write('BEFORE ' . $existingContent);
-
         return $response;
     }
 }

@@ -8,8 +8,6 @@ class EmpleadoDto
     public $id;
     public $nombre;
     public $apellido;
-    public $dni;
-    public $telefono;
     public $rolEmpleado;
     public $password;
 }
