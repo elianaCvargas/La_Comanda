@@ -1,6 +1,7 @@
 <?php
 
-use App\Middleware\UserValidation;
+use App\Middleware\MozoValidation;
+use App\Middleware\SocioValidation;
 use Slim\App;
 use Controller\EmpleadoController;
 use Controller\SocioController;
@@ -17,20 +18,21 @@ include_once __DIR__ . '/../Controller/MesaController.php';
 include_once __DIR__ . '/../Controller/PedidoController.php';
 include_once __DIR__ . '/../Controller/FileController.php';
 include_once __DIR__ . '/../Controller/LoginController.php';
-include_once __DIR__ . '/../Middleware/UserValidation.php';
+include_once __DIR__ . '/../Middleware/SocioValidation.php';
+include_once __DIR__ . '/../Middleware/MozoValidation.php';
 
 return function (App $app) {
     $container = $app->getContainer();  
     $app->group('/empleado', function ($app) {   
-        $this->put('', EmpleadoController::class . ':Modificar');   
-        $this->delete('', EmpleadoController::class . ':Eliminar');   
-        $this->post('', EmpleadoController::class . ':Crear');   
+        $this->put('', EmpleadoController::class . ':Modificar')->add(new SocioValidation());   
+        $this->delete('', EmpleadoController::class . ':Eliminar')->add(new SocioValidation());   
+        $this->post('', EmpleadoController::class . ':Crear')->add(new SocioValidation());   
     });
 
     $app->group('/socio', function ($app) {   
-        $this->post('', SocioController::class . ':Crear')->add(new UserValidation());   
-        $this->put('', SocioController::class . ':Modificar'); 
-        $this->delete('', SocioController::class . ':Eliminar');   
+        $this->post('', SocioController::class . ':Crear')->add(new SocioValidation());   
+        $this->put('', SocioController::class . ':Modificar')->add(new SocioValidation()); 
+        $this->delete('', SocioController::class . ':Eliminar')->add(new SocioValidation());   
 
     });
 
@@ -42,14 +44,20 @@ return function (App $app) {
 
     $app->group('/mesa', function ($app) {   
         $this->post('', MesaController::class . ':Crear');   
-        $this->put('', MesaController::class . ':Modificar');   
+        $this->put('/modificarEstado', MesaController::class . ':ModificarEstado');   
+        $this->put('/modificarPuntaje', MesaController::class . ':ModificarPuntaje');   
         $this->delete('', MesaController::class . ':Eliminar');   
     });
 
     $app->group('/pedido', function ($app) {   
-        $this->post('', PedidoController::class . ':Crear');  
-        $this->put('', PedidoController::class . ':Modificar');   
-        $this->delete('', PedidoController::class . ':Eliminar');   
+        $this->post('', PedidoController::class . ':Crear')->add(new MozoValidation());   
+        $this->put('/modificarEstado', PedidoController::class . ':ModificarEstado')->add(new MozoValidation());   
+        $this->delete('', PedidoController::class . ':Eliminar');    
+          
+        $this->put('/modificarEstadoDetalle', PedidoController::class . ':ModificarEstadoDetalle');
+        $this->put('/modificarPuntajeDetalle', PedidoController::class . ':ModificarPuntajeDetalle');
+        $this->put('/modificarPuntajes', PedidoController::class . ':ModificarPuntajes');   
+
     });
 
     $app->group('/file', function ($app) {   

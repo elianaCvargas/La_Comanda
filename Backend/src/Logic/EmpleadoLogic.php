@@ -10,6 +10,7 @@ use Common\ExceptionManager\ApplicationException;
 use Common\Mappings\UsuarioMapping;
 use Db\UsuarioDb;
 use Common\Util\ValidationHelper;
+use Exception;
 use Model\Empleado;
 
 
@@ -28,31 +29,33 @@ class EmpleadoLogic
     $erroresEmpleado =  ValidationHelper::ValidarCreateEmpleadoRequest($dto);
     $erroresUsuario = ValidationHelper::ValidarCreateUsuarioRequest($dto->nombre, $dto->apellido, $dto->username, $dto->password);
 
-    if (count($erroresUsuario) > 0 || $erroresEmpleado > 0) {
+    if (count($erroresUsuario) > 0 || count($erroresEmpleado) > 0) {
       $errores = array_merge($erroresUsuario, $erroresEmpleado);
-      return new ResultDto($errores, false, "Crear empleado");
+      throw new ApplicationException(json_encode($errores));
     }
 
+    
     $usuarioNuevo = UsuarioMapping::ToEmpleado($dto);
     UsuarioDb::createEmpleado($usuarioNuevo);
   }
 
   public function Modificar(EmpleadoDto $dto)
   {
-    $erroresUsuario = ValidationHelper::ValidarModifyUsuarioRequest($dto->id, $dto->nombre, $dto->apellido, $dto->username);
+    $erroresUsuario = ValidationHelper::ValidarModifyUsuarioRequest($dto->id, $dto->nombre, $dto->apellido, $dto->username, $dto->password);
 
     if (count($erroresUsuario) > 0) {
       foreach($erroresUsuario as $error)
       {
-        echo $error."\n";
+        throw new ApplicationException(json_encode($erroresUsuario));
       }
 
       return;
     }
 
     $usuario = UsuarioDb::getUsuarioById($dto->id);
-    $empleado = UsuarioMapping::usuarioToEmpleado($usuario, $dto->rolEmpleado);
-    if($empleado != null && $empleado->getRolUsuarioID() == Enum_RolesUsuarios::Empleado)
+    $empleado = UsuarioMapping::ToEmpleado($dto, $dto->rolEmpleado);
+
+    if($usuario != null && $empleado->getRolUsuarioID() == Enum_RolesUsuarios::Empleado)
     {
       UsuarioDb::modifyEmpleado($empleado);
       
@@ -81,7 +84,6 @@ class EmpleadoLogic
     if($usuario != null && $usuario->getRolUsuarioID() == Enum_RolesUsuarios::Empleado)
     {
       UsuarioDb::deleteEmpleado($usuario->getId());
-      
     }
     else 
     {

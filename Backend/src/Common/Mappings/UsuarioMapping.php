@@ -1,4 +1,5 @@
 <?php
+
 namespace Common\Mappings;
 
 use App\Model\Socio;
@@ -11,14 +12,15 @@ use Model\Usuario;
 include_once __DIR__ . '/../../Model/Empleado.php';
 include_once __DIR__ . '/../../Model/Socio.php';
 
-class UsuarioMapping{	
+class UsuarioMapping
+{
 	public static function ToEmpleado(EmpleadoDto $dto): Empleado
 	{
 		$usuario = new Empleado($dto->id, $dto->nombre, $dto->apellido, $dto->rolEmpleado, $dto->username, $dto->password);
 		return $usuario;
 	}
 
-	
+
 
 	public static function ToSocio(SocioDto $dto): Socio
 	{
@@ -26,18 +28,23 @@ class UsuarioMapping{
 		return $usuario;
 	}
 
-	public static function dbDataToUsuario($data) : Usuario
+	public static function dbDataToUsuario($data): Empleado
 	{
-		$usuario = new Usuario(intval($data->Id), $data->Nombre, $data->Apellido, $data->Username,$data->Password);
-		$usuario->setRolUsuarioID($data->RolUsuarioID);
 
-		return $usuario;
+		$empleado = new Empleado(intval($data->Id), $data->Nombre, $data->Apellido, intval($data->RolEmpleadoID), $data->Username, $data->Password);
+		return $empleado;
 	}
 
 	public static function usuarioToEmpleado(Usuario $usuario, $rolEmpleado): Empleado
 	{
-		$usuario = new Empleado($usuario->getId(), $usuario->getNombre()
-		, $usuario->getApellido(), $rolEmpleado, $usuario->getUsername(), $usuario->getPassword());
+		$usuario = new Empleado(
+			$usuario->getId(),
+			$usuario->getNombre(),
+			$usuario->getApellido(),
+			$rolEmpleado,
+			$usuario->getUsername(),
+			$usuario->getPassword()
+		);
 		return $usuario;
 	}
 }

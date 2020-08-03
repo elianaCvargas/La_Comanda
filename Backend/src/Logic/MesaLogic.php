@@ -31,7 +31,7 @@ class MesaLogic
     MesaDb::create($mesaNueva);
   }
 
-  public function Modificar(MesaDto $dto)
+  public function ModificarEstado(MesaDto $dto)
   {
     $erroresMesa = ValidationHelper::ValidarModifyMesaRequest($dto->id);
     if (count($erroresMesa) > 0) {
@@ -45,7 +45,47 @@ class MesaLogic
     $mesaById = MesaDb::getMesaById($dto->id);
     if ($mesaById != null) {
       $mesa = MesaMapping::ToMesa($dto, $dto->id);
-      MesaDb::modify($mesa);
+      MesaDb::modifyEstado($mesa);
+    } else {
+      throw new ApplicationException("No se encontro el Mesa.");
+    }
+  }
+
+  public function CerrarMesa(MesaDto $dto)
+  {
+    //agregar validación solo socio logueado para avanzar con modificiación
+    $erroresMesa = ValidationHelper::ValidarModifyMesaRequest($dto->id);
+    if (count($erroresMesa) > 0) {
+      foreach ($erroresMesa as $error) {
+        echo $error . "\n";
+      }
+
+      return;
+    }
+
+    $mesaById = MesaDb::getMesaById($dto->id);
+    if ($mesaById != null) {
+      $mesa = MesaMapping::ToMesa($dto, $dto->id);
+      MesaDb::modifyEstado($mesa);
+    } else {
+      throw new ApplicationException("No se encontro el Mesa.");
+    }
+  }
+
+  public function ModificarPuntaje(MesaDto $dto)
+  {
+    // $erroresMesa = ValidationHelper::ValidarModifyMesaRequest($dto->id);
+    // if (count($erroresMesa) > 0) {
+    //   foreach ($erroresMesa as $error) {
+    //     echo $error . "\n";
+    //   }
+
+    //   return;
+    // }
+    $mesaById = MesaDb::getMesaById($dto->id);
+    if ($mesaById != null) {
+      $mesa = MesaMapping::ToMesa($dto, $dto->id);
+      MesaDb::modifyPuntaje($mesa);
     } else {
       throw new ApplicationException("No se encontro el Mesa.");
     }
@@ -74,6 +114,7 @@ class MesaLogic
 
   public function alterarEstadoMesa(int $mesaId, int $estado)
   {
+
       MesaDb::alterarEstadoMesa($mesaId, $estado);
   }
 

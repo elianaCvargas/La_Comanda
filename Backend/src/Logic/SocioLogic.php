@@ -2,6 +2,7 @@
 
 namespace Logic;
 
+use Common\Dto\ResultDto;
 use Common\Dto\SocioDto;
 use Common\Enum\Enum_RolesUsuarios;
 use Common\ExceptionManager\ApplicationException;
@@ -20,15 +21,10 @@ class SocioLogic
   public function Crear(SocioDto $dto)
   {
 
-    $erroresUsuario = ValidationHelper::ValidarCreateUsuarioRequest($dto->nombre, $dto->apellido, $dto->username);
+    $erroresUsuario = ValidationHelper::ValidarCreateUsuarioRequest($dto->nombre, $dto->apellido, $dto->username, $dto->password);
 
     if (count($erroresUsuario) > 0) {
-      foreach($erroresUsuario as $error)
-      {
-        echo $error."\n";
-      }
-
-      return;
+      return new ResultDto($erroresUsuario, false, "Crear empleado");
     }
 
     $usuarioNuevo = UsuarioMapping::ToSocio($dto);
@@ -38,15 +34,11 @@ class SocioLogic
   public function Modificar(SocioDto $dto)
   {
     $errores = [];
-    $erroresUsuario = ValidationHelper::ValidarModifyUsuarioRequest($dto->id, $dto->nombre, $dto->apellido, $dto->username);
+    $erroresUsuario = ValidationHelper::ValidarModifyUsuarioRequest($dto->id, $dto->nombre, $dto->apellido, $dto->username, $dto->password);
 
     if (count($erroresUsuario) > 0) {
-      foreach($errores as $error)
-      {
-        echo $error."\n";
-      }
-
-      return;
+      
+      throw new ApplicationException(json_encode($erroresUsuario));
     }
 
     $usuarioNuevo = UsuarioMapping::ToSocio($dto);

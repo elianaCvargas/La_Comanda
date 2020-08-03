@@ -2,11 +2,13 @@
 
 namespace Controller;
 
+use Common\Dto\ResultDto;
 use Common\Mappings\UsuarioDtoMapping;
 use PHPUnit\Framework\Exception;
 use Common\ExceptionManager\ApplicationException;
 use Logic\EmpleadoLogic;
 use Logic\SocioLogic;
+use PDOException;
 
 include_once __DIR__ . '/../Common/Dto/UsuarioDto.php';
 include_once __DIR__ . '/../Logic/UsuarioLogic.php';
@@ -17,24 +19,31 @@ include_once __DIR__ . '/../Logic/SocioLogic.php';
 
 class SocioController extends BaseController
 {
-  public function Crear($request, $response, $args)
+  public function Crear($request, $response, $next)
   {
     try {
       $datosArray = $request->getParsedBody();
       if (
-        $this->ValidateCreateRequest($datosArray, ["nombre", "apellido", "username"])
+        $this->ValidateCreateRequest($datosArray, ["nombre", "apellido", "username", "password"])
       ) {
         $user = json_encode($datosArray);
-        $socioDto = UsuarioDtoMapping::ToSocioDto($user, true);
-        $ocioLogic = new SocioLogic();
-        $ocioLogic->Crear($socioDto);
+        $socioDto = UsuarioDtoMapping::ToSocioDto($user, false);
+        $socioLogic = new SocioLogic();
+        $socioLogic->Crear($socioDto);
+
+        $response->getBody()->write("Usuario creado con exito");
+        $ok = 201;
+        return $response->withStatus($ok);
       } else {
         echo "Faltan definir los campos";
       }
+    } catch (ApplicationException $ae) {
+
+      $response->getBody()->write(json_encode(array("message" => $ae->getMessage())));
+      $badrequest = 400;
+      return $response->withStatus($badrequest);
     } catch (Exception $e) {
       $response->withJson("Algun problema no conocido");
-    } catch (ApplicationException $ae) {
-     echo $ae->Message();
     }
   }
 
@@ -43,19 +52,28 @@ class SocioController extends BaseController
     try {
       $datosArray = $request->getParsedBody();
       if (
-        $this->ValidateModifyRequest($datosArray, "id", ["nombre", "apellido", "username"])
+        $this->ValidateModifyRequest($datosArray, "id", ["nombre", "apellido", "username", "password"])
       ) {
         $user = json_encode($datosArray);
-       $socioDto = UsuarioDtoMapping::ToSocioDto($user,true);
-       $socioLogic = new SocioLogic();
-       $socioLogic->Modificar($socioDto);
+        $socioDto = UsuarioDtoMapping::ToSocioDto($user, true);
+        $socioLogic = new SocioLogic();
+        $socioLogic->Modificar($socioDto);
+
+        $response->getBody()->write("Usuario modificado con exito");
+        $ok = 201;
+        return $response->withStatus($ok);
       } else {
-        echo "Debe definir al menos un campo para modificar y ingresar un id";
+        $response->getBody()->write("Debe definir al menos un campo para modificar e ingresar un id");
+        $badrequest = 400;
+        return $response->withStatus($badrequest);
       }
+    } catch (ApplicationException $ae) {
+
+      $response->getBody()->write(json_encode(array("message" => $ae->getMessage())));
+      $badrequest = 400;
+      return $response->withStatus($badrequest);
     } catch (Exception $e) {
       $response->withJson("Algun problema no conocido");
-    } catch (ApplicationException $ae) {
-     echo $ae->Message();
     }
   }
 
@@ -69,16 +87,21 @@ class SocioController extends BaseController
         $obj = json_encode($datosArray);
         $user = json_decode($obj);
 
-       $socioLogic = new SocioLogic();
-       $socioLogic->Eliminar($user->id);
-        echo "Eliminado con exito";
+        $socioLogic = new SocioLogic();
+        $socioLogic->Eliminar($user->id);
+        
+        $response->getBody()->write("Usuario eliminado con exito");
+        $ok = 201;
+        return $response->withStatus($ok);
       } else {
-        echo "Debe definir al menos un campo para modificar y ingresar un id";
+        $response->getBody()->write("Debe definir al menos un campo para modificar e ingresar un id");
+        $badrequest = 400;
+        return $response->withStatus($badrequest);
       }
     } catch (ApplicationException $ae) {
       echo $ae->Message();
-     }catch (Exception $e) {
+    } catch (Exception $e) {
       echo "Algun problema no conocido";
-    } 
+    }
   }
 }

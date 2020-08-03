@@ -9,4 +9,5 @@ class SocioDto
     public $nombre;
     public $apellido;
     public $username;
+    public $password;
 }

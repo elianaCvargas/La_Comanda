@@ -1,4 +1,5 @@
 <?php
+
 namespace Controller;
 
 use Common\ExceptionManager\ApplicationException;
@@ -15,22 +16,32 @@ include_once __DIR__ . '/../Logic/ProductoLogic.php';
 
 class ProductoController extends BaseController
 {
-    public function Crear($request, $response, $args) {
+  public function Crear($request, $response, $args)
+  {
+    try {
       $datosArray = $request->getParsedBody();
-      if($this->ValidateCreateRequest($datosArray, ["nombre", "tiempoEstimado", "tipo", "precio"]))
-      {
+      if ($this->ValidateCreateRequest($datosArray, ["nombre", "tiempoEstimado", "tipo", "precio"])) {
         $producto = json_encode($datosArray);
         $productoDto = ProductoMapping::ToDto($producto, false);
         $productoLogic = new ProductoLogic();
         $productoLogic->Crear($productoDto);
-        echo "Producto generado con exito";
-      } 
-      else{
-        echo "Faltan definir los campos";
-      }  
-    }
 
-    public function Modificar($request, $response, $args)
+        $response->getBody()->write("Producto creado con exito");
+        $ok = 201;
+        return $response->withStatus($ok);
+      } else {
+        $response->getBody()->write("Faltan definir los campos");
+        $badrequest = 400;
+        return $response->withStatus($badrequest);
+      }
+    } catch (ApplicationException $ex) {
+      $response->getBody()->write($ex->Message());
+      $badrequest = 400;
+      return $response->withStatus($badrequest);
+    }
+  }
+
+  public function Modificar($request, $response, $args)
   {
     try {
       $datosArray = $request->getParsedBody();
@@ -41,15 +52,22 @@ class ProductoController extends BaseController
         $productoDto = ProductoMapping::ToDto($producto, true);
         $productoLogic = new productoLogic();
         $productoLogic->Modificar($productoDto);
-        echo "Modificado con exito";
+
+        $response->getBody()->write("Producto modificado con exito");
+        $ok = 201;
+        return $response->withStatus($ok);
       } else {
-        echo "Debe definir al menos un campo para modificar e ingresar un id";
+        $response->getBody()->write("Faltan definir los campos");
+        $badrequest = 400;
+        return $response->withStatus($badrequest);
       }
-    } catch (ApplicationException $ae) {
-      echo $ae->Message();
-     }catch (Exception $e) {
+    } catch (ApplicationException $ex) {
+      $response->getBody()->write($ex->Message());
+      $badrequest = 400;
+      return $response->withStatus($badrequest);
+    } catch (Exception $e) {
       echo "Algun problema no conocido";
-    } 
+    }
   }
 
   public function Eliminar($request, $response, $args)
@@ -62,16 +80,23 @@ class ProductoController extends BaseController
         $obj = json_encode($datosArray);
         $producto = json_decode($obj);
 
-       $productoLogic = new ProductoLogic();
-       $productoLogic->Eliminar($producto->id);
-        echo "Eliminado con exito";
+        $productoLogic = new ProductoLogic();
+        $productoLogic->Eliminar($producto->id);
+        
+        $response->getBody()->write("Producto eliminado con exito");
+        $ok = 201;
+        return $response->withStatus($ok);
       } else {
-        echo "Debe definir al menos un campo para modificar y ingresar un id";
+        $response->getBody()->write("Faltan definir los campos");
+        $badrequest = 400;
+        return $response->withStatus($badrequest);
       }
-    } catch (ApplicationException $ae) {
-      echo $ae->Message();
-     }catch (Exception $e) {
+    } catch (ApplicationException $ex) {
+      $response->getBody()->write($ex->Message());
+      $badrequest = 400;
+      return $response->withStatus($badrequest);
+    } catch (Exception $e) {
       echo "Algun problema no conocido";
-    } 
+    }
   }
 }

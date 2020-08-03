@@ -23,7 +23,7 @@ class ProductoLogic
     if (count($erroresProducto) > 0) {
       foreach($erroresProducto as $error)
       {
-         echo $error."\n";
+        throw new ApplicationException(json_encode($erroresProducto));
       }
      return  json_encode($erroresProducto);
     }
@@ -36,12 +36,7 @@ class ProductoLogic
   {
     $erroresProducto = ValidationHelper::ValidarModifyProductoRequest($dto->id);
     if (count($erroresProducto) > 0) {
-      foreach($erroresProducto as $error)
-      {
-        echo $error."\n";
-      }
-
-      return;
+        throw new ApplicationException(json_encode($erroresProducto));
     }
 
     $productoById = ProductoDb::getProductoById($dto->id);
@@ -58,23 +53,16 @@ class ProductoLogic
 
   public function Eliminar(string $id)
   {
-    $errores = [];
-    $erroresUsuario = ValidationHelper::ValidarDeleteUsuarioRequest($id);
+    $erroresProducto = ValidationHelper::ValidarDeleteUsuarioRequest($id);
 
-    if (count($erroresUsuario) > 0) {
-      foreach($errores as $error)
-      {
-        echo $error."\n";
-      }
-
-      return;
+    if (count($erroresProducto) > 0) {
+        throw new ApplicationException(json_encode($erroresProducto));
     }
 
     $producto = ProductoDb::getProductoById(intval($id));
     if($producto != null)
     {
       ProductoDb::delete($producto->getId());
-      
     }
     else 
     {

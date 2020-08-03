@@ -12,5 +12,6 @@ class PedidoDto
     public $mozoId;
     public $puntajeMozo;
     public $puntajeMesa;
+    // public $productos = [];
 }
 ?>

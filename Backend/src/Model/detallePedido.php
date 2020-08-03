@@ -14,6 +14,18 @@ class DetallePedido
     private $productoId;
     private $puntaje;
 
+    // public function __construct($id, $pedido, $responsable, $estado, $inicio, $fin, $productoId, $puntaje)
+    // {
+    //     $this->id = $id;
+    //     $this->pedido= $pedido;
+    //     $this->responsable= $responsable;
+    //     $this->estado = $estado;
+    //     $this->inicio= $inicio;
+    //     $this->fin= $fin;
+    //     $this->productoId= $productoId;
+    //     $this->puntaje= $puntaje;
+    // }
+    
     public function getId() {
         return $this->id;
     }

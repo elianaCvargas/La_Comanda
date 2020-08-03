@@ -2,8 +2,6 @@
 
 namespace Controller;
 
-use Model\Cliente;
-use Db\ClienteDb;
 use Common\Dto\UsuarioDto;
 use Common\Mappings\UsuarioDtoMapping;
 use PHPUnit\Framework\Exception;
@@ -28,23 +26,27 @@ class EmpleadoController extends BaseController
 
     try {
       $datosArray = $request->getParsedBody();
-      if ($this->ValidateCreateRequest($datosArray, ["nombre", "apellido", "username", "rolEmpleado", "password"])) 
-      {
+      if ($this->ValidateCreateRequest($datosArray, ["nombre", "apellido", "username", "rolEmpleado", "password"])) {
         $user = json_encode($datosArray);
         $empladoDto = UsuarioDtoMapping::ToUserEmployeeDto($user, false);
         $empleadoLogic = new EmpleadoLogic();
         $empleadoLogic->Crear($empladoDto);
-      } 
-      else
-      {
-        echo "Faltan definir los campos";
+
+        $response->getBody()->write("Usuario creado con exito");
+        $ok = 201;
+        return $response->withStatus($ok);
+      } else {
+        $response->getBody()->write("Faltan definir los campos");
+        $badrequest = 400;
+        return $response->withStatus($badrequest);
       }
+    } catch (ApplicationException $ae) {
+      $response->getBody()->write($ae->Message());
+      $badrequest = 400;
+      return $response->withStatus($badrequest);
     } catch (Exception $e) {
       var_dump($e);
       $response->withJson("Algun problema no conocido");
-    } catch (ApplicationException $ae) {
-      var_dump($ae);
-     echo $ae->Message();
     }
   }
 
@@ -53,21 +55,28 @@ class EmpleadoController extends BaseController
     try {
       $datosArray = $request->getParsedBody();
       if (
-        $this->ValidateModifyRequest($datosArray, "id", ["nombre", "apellido", "username"])
+        $this->ValidateModifyRequest($datosArray, "id", ["nombre", "apellido", "username", "password"])
       ) {
         $user = json_encode($datosArray);
         $empleadoDto = UsuarioDtoMapping::ToUserEmployeeDto($user, true);
         $empleadoLogic = new EmpleadoLogic();
         $empleadoLogic->Modificar($empleadoDto);
-        echo "Modificado con exito";
+
+        $response->getBody()->write("Usuario modificado con exito");
+        $ok = 201;
+        return $response->withStatus($ok);
       } else {
-        echo "Debe definir al menos un campo para modificar e ingresar un id";
+        $response->getBody()->write("Faltan definir los campos");
+        $badrequest = 400;
+        return $response->withStatus($badrequest);
       }
     } catch (ApplicationException $ae) {
-      echo $ae->Message();
-     }catch (Exception $e) {
-      echo "Algun problema no conocido";
-    } 
+      $response->getBody()->write($ae->Message());
+      $badrequest = 400;
+      return $response->withStatus($badrequest);
+    } catch (Exception $e) {
+      $response->withJson("Algun problema no conocido");
+    }
   }
 
   public function Eliminar($request, $response, $args)
@@ -82,14 +91,21 @@ class EmpleadoController extends BaseController
 
         $empleadoLogic = new EmpleadoLogic();
         $empleadoLogic->Eliminar($user->id);
-        echo "Eliminado con exito";
+
+        $response->getBody()->write("Usuario eliminado con exito");
+        $ok = 201;
+        return $response->withStatus($ok);
       } else {
-        echo "Debe definir al menos un campo para modificar y ingresar un id";
+        $response->getBody()->write("Faltan definir los campos");
+        $badrequest = 400;
+        return $response->withStatus($badrequest);
       }
     } catch (ApplicationException $ae) {
-      echo $ae->Message();
-     }catch (Exception $e) {
+      $response->getBody()->write($ae->Message());
+      $badrequest = 400;
+      return $response->withStatus($badrequest);
+    } catch (Exception $e) {
       echo "Algun problema no conocido";
-    } 
+    }
   }
 }

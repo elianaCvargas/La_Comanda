@@ -41,22 +41,33 @@ abstract class ValidationHelper
       array_push($errores, "Debe ingresar un email.");
     }
     if ($password === "" || $password === null) {
-      array_push($errores, "Debe ingresar un pass.");
+      array_push($errores, "Debe ingresar un password.");
     }
+
     return $errores;
   }
 
-  public static function ValidarModifyUsuarioRequest($id, $nombre, $apellido, $username)
+  public static function ValidarModifyUsuarioRequest($id, $nombre, $apellido, $username, $password)
   {
     $errores = [];
     if ($id === "") {
       array_push($errores, "Debe ingresar un id.");
     }
 
-    if ($nombre === "" && $apellido === "" && $username === "") {
-      array_push($errores, "Debe modificar al menos un campo.");
+    if ($nombre === "") {
+      array_push($errores, "El campo nombre no puede estar vacio");
     }
 
+    if ($apellido === "") {
+      array_push($errores, "El campo apellido no puede estar vacio");
+    }
+    if ($username === "") {
+      array_push($errores, "El campo usuario no puede estar vacio");
+    }
+    if ($password === "") {
+      array_push($errores, "El campo password no puede estar vacio");
+    }
+    
     return $errores;
   }
 
@@ -150,9 +161,7 @@ abstract class ValidationHelper
     if ($pedidoDto->nombreCliente === "" || $pedidoDto->nombreCliente === null) {
       array_push($errores, "Debe ingresar un nombre del  cliente.");
     }
-    if ($pedidoDto->estado === "" || $pedidoDto->estado === null) {
-      array_push($errores, "Debe cambiar el estado.");
-    }
+
     if ($pedidoDto->mesaId === "" || $pedidoDto->mesaId === null) {
       array_push($errores, "Debe ingresar una mesa.");
     }

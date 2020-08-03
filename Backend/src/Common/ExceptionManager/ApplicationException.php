@@ -8,6 +8,7 @@ class ApplicationException extends Exception
 {
     protected $code;
     protected $message;
+    private $errors = [];
     public function __construct($message, $code = 0, Exception $previous = null) {
         parent::__construct($message, $code, $previous);
     }
@@ -18,6 +19,16 @@ class ApplicationException extends Exception
 
     public function customFunction() {
         echo "A custom function for this type of exception\n";
+    }
+    
+    public function SetArrayError($array)
+    {
+         $this->errors = $array;
+    }
+
+    public function GetArrayError()
+    {
+        return $this->errors;
     }
 
 }

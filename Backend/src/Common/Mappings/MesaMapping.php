@@ -16,21 +16,21 @@ class MesaMapping
         $mesaDto = new MesaDto();
         if ($modificar) {
             $mesaDto->id  = $obj->id;
+            $mesaDto->codigo  = $obj->codigo;
+            $mesaDto->puntaje  = $obj->puntaje;
         }
 
-        // $mesaDto->codigo  = $obj->codigo;
         $mesaDto->estado  = $obj->estado;
         return $mesaDto;
     }
 
     public static function ToMesa(MesaDto $data, int $id): Mesa
     {
-        // var_dump( $data);
-        return new Mesa($id, $data->codigo, intval($data->estado));
+        return new Mesa($id, $data->codigo, intval($data->estado), intval($data->puntaje));
     }
-    
+
     public static function dbDataToMesa($data): Mesa
     {
-        return new Mesa(intval($data->Id), $data->Codigo, intval($data->Estado));
+        return new Mesa(intval($data->Id), $data->Codigo, intval($data->Estado), intval($data->Puntaje));
     }
 }

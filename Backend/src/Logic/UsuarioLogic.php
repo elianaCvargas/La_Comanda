@@ -14,6 +14,7 @@ use Common\Util\ValidationHelper;
 use Common\Dto\UsuarioDto;
 use Common\ExceptionManager\ApplicationException;
 use Db\UsuarioDb;
+use Model\Empleado;
 use Model\Usuario;
 use phpDocumentor\Reflection\Types\Boolean;
 
@@ -25,7 +26,7 @@ include_once __DIR__ . '/../Common/Util/ValidationHelper.php';
 class UsuarioLogic
 {
 
-    public function validateUserCredential($username, $password): Usuario
+    public function validateUserCredential($username, $password): Empleado
     {
 
             $user = UsuarioDb::getUsuarioByUsername($username);

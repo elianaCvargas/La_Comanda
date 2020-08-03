@@ -19,6 +19,7 @@ class UsuarioCredencialMapping
         $usuario->username = $obj->username;
         $usuario->password = $obj->password;
         $usuario->rolUsuario = null;
+        $usuario->rolEmpleado = null;
         return $usuario;
     }
 

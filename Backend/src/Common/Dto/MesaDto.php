@@ -8,4 +8,5 @@ class MesaDto
     public $id;
     public $codigo;
     public $estado;
+    public $puntaje;
 }

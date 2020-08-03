@@ -9,4 +9,5 @@ class UsuarioCredencialesDto
     public $username;
     public $password;
     public $rolUsuario;
+    public $rolEmpleado;
 }

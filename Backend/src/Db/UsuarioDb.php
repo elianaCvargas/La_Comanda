@@ -10,6 +10,7 @@ use Model\Usuario;
 use Db\db;
 use Model\Empleado;
 use PDO;
+use PDOException;
 use PHPUnit\Framework\Exception;
 use Slim\Http\Message;
 
@@ -37,8 +38,6 @@ abstract class UsuarioDb extends db
 
 	public static function createEmpleado(Empleado $empleado)
 	{
-		var_dump($empleado);
-
 		UsuarioDb::createUser($empleado, $empleado->getUserRolEmpleado());
 	}
 
@@ -49,25 +48,30 @@ abstract class UsuarioDb extends db
 
 	private static function createUser(Usuario $user, ?int $rolEmpleado)
 	{
-		var_dump($user);
-	 try {
-		$SQL = 'INSERT INTO usuarios (Username,Nombre, Apellido, RolUsuarioID, RolEmpleadoID, Password) VALUES (?,?,?,?,?,?)';
-		$result = db::connect()->prepare($SQL);
-		$result->execute(array(
-			$user->getUserName(),
-			$user->getNombre(),
-			$user->getApellido(),
-			$user->getRolUsuarioID(),
-			$rolEmpleado, 
-			$user->getPassword()
-		));
-		} catch (Exception $e) {
-			
-		} 
+
+		try {
+			$SQL = 'INSERT INTO usuarios (Username,Nombre, Apellido, RolUsuarioID, RolEmpleadoID, Password) VALUES (?,?,?,?,?,?)';
+			$result = db::connect()->prepare($SQL);
+			$result->execute(array(
+				$user->getUserName(),
+				$user->getNombre(),
+				$user->getApellido(),
+				$user->getRolUsuarioID(),
+				$rolEmpleado,
+				$user->getPassword()
+			));
+		} catch (PDOException $e) {
+			if ($e->getCode() == 23000) {
+				throw new ApplicationException("El nombre de usuario ya existe");
+			} else {
+				throw new ApplicationException("Hubo un problema al intentar isertar el usuario.");
+			}
+		}
 	}
 
 	public static function modifyEmpleado(Empleado $empleado)
 	{
+
 		UsuarioDb::modifyUser($empleado, $empleado->getUserRolEmpleado());
 	}
 
@@ -78,23 +82,24 @@ abstract class UsuarioDb extends db
 
 	private static function modifyUser(Usuario $user, ?int $rolEmpleado)
 	{
-		// try {
-		$updateFields = DbQueryBuilder::BuildUpdateFields(
-			['Username', 'Nombre', 'Apellido', 'RolEmpleadoID'],
-			[$user->getUserName(), $user->getNombre(), $user->getApellido(), $rolEmpleado]
-		);
+		try {
+			$updateFields = DbQueryBuilder::BuildUpdateFields(
+				['Username', 'Nombre', 'Apellido', 'RolEmpleadoID', 'Password'],
+				[$user->getUserName(), $user->getNombre(), $user->getApellido(), $rolEmpleado, $user->getPassword()]
+			);
 
-		$SQL = 'UPDATE usuarios SET ' . $updateFields . ' WHERE Id=?';
-		$result = db::connect()->prepare($SQL);
-		$result->execute(array(
-			$user->getId()
-		));
-
-		// } catch (Exception $e) {
-		// 	die('Error ClienteRepository(Create) '.$e->getMessage());
-		// } finally{
-		// 	$result = null;
-		// }
+			$SQL = 'UPDATE usuarios SET ' . $updateFields . ' WHERE Id=?';
+			$result = db::connect()->prepare($SQL);
+			$result->execute(array(
+				$user->getId()
+			));
+		} catch (PDOException $e) {
+			if ($e->getCode() == 23000) {
+				throw new ApplicationException("El nombre de usuario ya existe");
+			} else {
+				throw new ApplicationException("Hubo un problema al intentar isertar el usuario.");
+			}
+		}
 	}
 
 	public static function deleteEmpleado(int $id)
@@ -138,7 +143,7 @@ abstract class UsuarioDb extends db
 		}
 	}
 
-	public static function getUsuarioByUsername($username): Usuario
+	public static function getUsuarioByUsername($username): Empleado
 	{
 		$SQL = 'SELECT * FROM usuarios WHERE  Username = ?';
 		$result = db::connect()->prepare($SQL);

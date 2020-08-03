@@ -4,14 +4,15 @@ class Mesa{
     private $id;
     private $codigo;
     private $estado;
+    private $puntaje;
 
-    public function __construct($id, $codigo, $estado)
+    public function __construct($id, $codigo, $estado, $puntaje)
     {
         $this->id = $id;
         $this->codigo = $codigo;
         $this->estado = $estado;
+        $this->puntaje = $puntaje;
     }
-
     public function getId() {
         return $this->id;
     }
@@ -34,6 +35,14 @@ class Mesa{
 
     public function setEstado($estado) {
         $this->estado = $estado;
+    } 
+    
+    public function getPuntaje() {
+        return $this->puntaje;
+    }
+
+    public function setPuntaje($puntaje) {
+        $this->puntaje = $puntaje;
     }
 }
 ?>

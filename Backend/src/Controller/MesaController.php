@@ -1,6 +1,7 @@
 <?php
 namespace Controller;
 
+use Common\Enum\Enum_EstadoMesa;
 use Common\ExceptionManager\ApplicationException;
 use Common\Mappings\MesaMapping;
 use Logic\MesaLogic;
@@ -10,6 +11,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 include_once __DIR__ . '/../Controller/BaseController.php';
+include_once __DIR__ . '/../Common/Enum/EstadoMesaEnum.php';
 include_once __DIR__ . '/../Common/Mappings/MesaMapping.php';
 include_once __DIR__ . '/../Logic/MesaLogic.php';
 
@@ -30,24 +32,50 @@ class MesaController extends BaseController
       }  
     }
 
-  public function Modificar($request, $response, $args)
+  public function ModificarEstado($request, $response, $args)
   {
     try {
       $datosArray = $request->getParsedBody();
       if (
-        $this->ValidateModifyRequest($datosArray, "id", ["codigo", "estado"])
+        $this->ValidateModifyRequest($datosArray, "id", ["estado"])
       ) {
         $mesa = json_encode($datosArray);
         $mesaDto = MesaMapping::ToDto($mesa, true);
         $mesaLogic = new MesaLogic();
-        $mesaLogic->Modificar($mesaDto);
+        if($mesaDto->estado == Enum_EstadoMesa::Cerrada){
+          $mesaLogic->CerrarMesa($mesaDto);
+        } else {
+          $mesaLogic->ModificarEstado($mesaDto);
+        }
         echo "Modificado con exito";
       } else {
         echo "Debe definir al menos un campo para modificar e ingresar un id";
       }
     } catch (ApplicationException $ae) {
       echo $ae->Message();
-     }catch (Exception $e) {
+    }catch (Exception $e) {
+      echo "Algun problema no conocido";
+    } 
+  }
+
+  public function ModificarPuntaje($request, $response, $args)
+  {
+    try {
+      $datosArray = $request->getParsedBody();
+      if (
+        $this->ValidateModifyRequest($datosArray, "id", ["puntaje"])
+      ) {
+        $mesa = json_encode($datosArray);
+        $mesaDto = MesaMapping::ToDto($mesa, true);
+        $mesaLogic = new MesaLogic();
+        $mesaLogic->ModificarPuntaje($mesaDto);
+        echo "Modificado con exito";
+      } else {
+        echo "Debe definir al menos un campo para modificar e ingresar un id";
+      }
+    } catch (ApplicationException $ae) {
+      echo $ae->Message();
+    }catch (Exception $e) {
       echo "Algun problema no conocido";
     } 
   }

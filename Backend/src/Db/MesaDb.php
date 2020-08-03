@@ -27,15 +27,16 @@ abstract class MesaDb extends db
                 $mesa->getEstado(),
             ));
         } catch (Exception $e) {
+            var_dump($e);
         }
     }
 
-    public static function modify(Mesa $mesa)
+    public static function modifyEstado(Mesa $mesa)
     {
         try {
             $updateFields = DbQueryBuilder::BuildUpdateFields(
-                ['Codigo', 'Estado'],
-                [$mesa->getCodigo(), $mesa->getEstado()]
+                ['EstadoMesaId'],
+                [$mesa->getEstado()]
             );
 
             $SQL = 'UPDATE mesas SET ' . $updateFields . ' WHERE Id=?';
@@ -44,9 +45,27 @@ abstract class MesaDb extends db
                 $mesa->getId()
             ));
         } catch (Exception $e) {
+            var_dump($e);
         }
     }
 
+    public static function modifyPuntaje(Mesa $mesa)
+    {
+        try {
+            $updateFields = DbQueryBuilder::BuildUpdateFields(
+                ['Puntaje'],
+                [$mesa->getPuntaje()]
+            );
+
+            $SQL = 'UPDATE mesas SET ' . $updateFields . ' WHERE Id=?';
+            $result = db::connect()->prepare($SQL);
+            $result->execute(array(
+                $mesa->getId()
+            ));
+        } catch (Exception $e) {
+            var_dump($e);
+        }
+    }
 
     public static function delete(int $id)
     {
@@ -57,6 +76,7 @@ abstract class MesaDb extends db
                 $id
             ));
         } catch (Exception $e) {
+            var_dump($e);
         }
     }
 
@@ -77,6 +97,7 @@ abstract class MesaDb extends db
 
     public static function alterarEstadoMesa(int $mesaId, int $estado)
     {
+
         try {
             $SQL = 'UPDATE mesas SET EstadoMesaId = ?  WHERE  Id = ?';
             $result = db::connect()->prepare($SQL);
