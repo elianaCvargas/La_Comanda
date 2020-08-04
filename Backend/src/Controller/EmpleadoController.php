@@ -121,7 +121,8 @@ class EmpleadoController extends BaseController
       {
         $pedidos = new PedidoLogic();
         // var_dump($tokenData);
-        $result = $pedidos->GetDetallePedidoByRol($tokenData->rolEmpleado);
+        $result = $pedidos->GetDetallePedidoByRol($tokenData->rolEmpleado, $tokenData->username);
+        // var_dump($tokenData->username);
         $response->getBody()->write(json_encode($result));
         $ok = 201;
         return $response->withStatus($ok);

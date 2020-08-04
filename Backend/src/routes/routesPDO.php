@@ -1,8 +1,10 @@
 <?php
 
+use App\Middleware\Log;
 use App\Middleware\MozoValidation;
 use App\Middleware\SocioValidation;
 use App\Middleware\ResponsableValidation;
+use App\Middleware\UserValidation;
 use Slim\App;
 use Controller\EmpleadoController;
 use Controller\SocioController;
@@ -22,6 +24,8 @@ include_once __DIR__ . '/../Controller/LoginController.php';
 include_once __DIR__ . '/../Middleware/SocioValidation.php';
 include_once __DIR__ . '/../Middleware/MozoValidation.php';
 include_once __DIR__ . '/../Middleware/ResponsableValidation.php';
+include_once __DIR__ . '/../Middleware/UserValidation.php';
+include_once __DIR__ . '/../Middleware/Log.php';
 
 return function (App $app) {
     $container = $app->getContainer();  
@@ -29,7 +33,7 @@ return function (App $app) {
         $this->put('', EmpleadoController::class . ':Modificar')->add(new SocioValidation());   
         $this->delete('', EmpleadoController::class . ':Eliminar')->add(new SocioValidation());   
         $this->post('', EmpleadoController::class . ':Crear')->add(new SocioValidation());   
-        $this->get('/pendientes', EmpleadoController::class . ':GetPedidosByRol')->add(new ResponsableValidation());   
+        $this->get('/pendientes', EmpleadoController::class . ':GetPedidosByRol')->add(new UserValidation());   
         
     });
 
@@ -69,7 +73,7 @@ return function (App $app) {
     });
 
     $app->group('/login', function ($app) {   
-        $this->post('', LoginController::class . ':login');   
+        $this->post('', LoginController::class . ':login')->add(new Log());   
         $this->post('/verifyToken', LoginController::class . ':verifyToken'); 
     });
 };

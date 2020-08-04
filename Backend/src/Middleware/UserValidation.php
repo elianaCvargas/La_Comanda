@@ -2,6 +2,7 @@
 
 namespace App\Middleware;
 
+use Common\Enum\Enum_RolesEmpleados;
 use Common\Enum\Enum_RolesUsuarios;
 use Common\Util\AutentificadorJWT;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -11,7 +12,7 @@ use Exception;
 use Slim\Http\Response as Response;
 
 
-class SocioValidation
+class UserValidation
 {
     /**
      * Example middleware invokable class
@@ -41,10 +42,9 @@ class SocioValidation
                 $response->getBody()->write(json_encode(array("message" => 'Token inválido')));
                 return $response->withStatus($resCode);
             }
-            var_dump($tokenData->rolUsuario);
 
-            if ($tokenData->rolUsuario == Enum_RolesUsuarios::Socio) {
-                $request->withAttribute('rolUsuario', $tokenData->rolUsuario);
+            if ($tokenData->rolUsuario == Enum_RolesUsuarios::Empleado || $tokenData->rolUsuario == Enum_RolesUsuarios::Socio) {
+                $request->withAttribute('rolEmpleado', $tokenData->rolEmpleado);
                 $response = $next($request, $response);
             } else {
                 $response->getBody()->write(json_encode(array("message" => 'No tiene permisos')));

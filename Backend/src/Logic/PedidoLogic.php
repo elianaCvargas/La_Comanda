@@ -38,9 +38,8 @@ class PedidoLogic
       throw new ApplicationException(json_encode($erroresPedido));
     }
 
-    if(count($produtos) <= 0)
-    {
-        throw new ApplicationException("Debe ingresar al menos un producto para realizar el alta del pedido");
+    if (count($produtos) <= 0) {
+      throw new ApplicationException("Debe ingresar al menos un producto para realizar el alta del pedido");
     }
 
     //setea estado pedido
@@ -50,7 +49,7 @@ class PedidoLogic
 
     // obtener lista de productos
     $detallesPedido = [];
-    foreach($produtos as $productoId){
+    foreach ($produtos as $productoId) {
       $producto = ProductoDb::getProductoById($productoId);
       // acumula tiempo estimado 
       $dto->tiempoEstimado += $producto->getTiempoEstimado();
@@ -63,7 +62,7 @@ class PedidoLogic
       $detalle->setFin(null);
       $detalle->setPuntaje(null);
       // guardando detalle pedido a la lista
-      $detallesPedido [] = $detalle;
+      $detallesPedido[] = $detalle;
     }
 
     $pedidoNuevo = PedidoMapping::ToPedido($dto, 0);
@@ -71,7 +70,7 @@ class PedidoLogic
     $pedidoNuevo = PedidoDb::GetPedidoByCode($pedidoNuevo->getCodigo());
 
     // 2º foreach, actualiza pedidoId y crea detallePedido
-    foreach($detallesPedido as $detalle){
+    foreach ($detallesPedido as $detalle) {
       $detalle->setPedido($pedidoNuevo->getId());
       DetallePedidoDb::create($detalle);
     }
@@ -130,30 +129,25 @@ class PedidoLogic
       // $detallePedido = DetallePedidoMapping::ToDetallePedido($dto, $dto->id);
       $detallePedido->setEstado($dto->estado);
       //según estado se llama al método de modificación
-      if($dto->estado == Enum_EstadoDetallePedido::EnPreparacion){
+      if ($dto->estado == Enum_EstadoDetallePedido::EnPreparacion) {
         $detallePedido->setInicio(date('Y-m-d H:i:s', time()));
         $detallePedido->setResponsable($usuarioId);
-       
-      } else if($dto->estado == Enum_EstadoDetallePedido::Listo){
+      } else if ($dto->estado == Enum_EstadoDetallePedido::Listo) {
         $detallePedido->setFin(date('Y-m-d H:i:s', time()));
 
-        //modifico el estado a listos para servir para que lo vea el mozo
-        
+        DetallePedidoDb::modifyEstado($detallePedido);
 
         $pedidoDto = new PedidoDto();
         $pedidoDto->id = $detallePedido->getPedido();
         $pedidoDto->estado = Enum_EstadoPedido::ListoParaServir;
         //  var_dump($pedidoDto->id);
-       //devuelve falso si hay pedidos pendientes
-        if(DetallePedidoDb::TodosPlatosListos($pedidoDto->id))
-        {
-            $pedidoLogic = new PedidoLogic();
-            $pedidoLogic->ModificarEstado($pedidoDto);
+        //devuelve falso si hay pedidos pendientes
+        if (DetallePedidoDb::TodosPlatosListos($pedidoDto->id)) {
+          // var_dump($pedidoDto);
+          $pedidoLogic = new PedidoLogic();
+          $pedidoLogic->ModificarEstado($pedidoDto);
         }
-
-        
       }
-      DetallePedidoDb::modifyEstado($detallePedido);
     } else {
       throw new ApplicationException("No se encontro el detalle pedido.");
     }
@@ -180,11 +174,11 @@ class PedidoLogic
     }
   }
 
-  public function GetDetallePedidoByRol(int $rolUsuario)
+  public function GetDetallePedidoByRol(int $rolUsuario, string $usernme)
   {
-    $array = DetallePedidoDb::GetPedidoDetalleByRol($rolUsuario);
+    $array = DetallePedidoDb::GetPedidoDetalleByRol($rolUsuario, $usernme);
     return $array;
-  }  
+  }
 
   private function GenerateAlphanumericCode(): string
   {
@@ -192,7 +186,7 @@ class PedidoLogic
     return substr(str_shuffle($permitted_chars), 0, 5);
   }
 
-   public function TodosPlatosListos(int $pedidoId): bool
+  public function TodosPlatosListos(int $pedidoId): bool
   {
     return DetallePedidoDb::TodosPlatosListos($pedidoId);
   }

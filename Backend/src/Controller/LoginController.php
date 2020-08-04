@@ -34,7 +34,7 @@ class LoginController extends BaseController
                     $usuarioCredDto->rolUsuario =  $usuarioConCredencial->getRolUsuarioID();
                     $usuarioCredDto->rolEmpleado =  $usuarioConCredencial->getUserRolEmpleado();
                     $usuarioCredDto->usuarioId =  $usuarioConCredencial->getId();
-                    // var_dump($usuarioCredDto->rolEmpleado);
+                    //  var_dump($usuarioCredDto->rolUsuario);
                     $token = AutentificadorJWT::CrearToken($usuarioCredDto, $usuarioCredDto->rolEmpleado);
                     if($usuarioConCredencial->getRolUsuarioID() == Enum_RolesUsuarios::Empleado)
                     {

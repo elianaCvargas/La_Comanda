@@ -32,6 +32,7 @@ class UsuarioMapping
 	{
 
 		$empleado = new Empleado(intval($data->Id), $data->Nombre, $data->Apellido, intval($data->RolEmpleadoID), $data->Username, $data->Password);
+		$empleado->setRolUsuarioID(intval($data->RolUsuarioID));
 		return $empleado;
 	}
 
