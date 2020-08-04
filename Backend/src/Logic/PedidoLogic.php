@@ -121,26 +121,37 @@ class PedidoLogic
   }
 
 
-  public function ModificarEstadoDetalle(DetallePedidoDto $dto)
+  public function ModificarEstadoDetalle(DetallePedidoDto $dto, int $usuarioId)
   {
-    // $erroresMesa = ValidationHelper::ValidarModifyMesaRequest($dto->id);
-    // if (count($erroresMesa) > 0) {
-    //   foreach ($erroresMesa as $error) {
-    //     echo $error . "\n";
-    //   }
-
-    //   return;
-    // }
 
     $detallePedido = DetallePedidoDb::getDetallePedidoById($dto->id);
+
     if ($detallePedido != null) {
       // $detallePedido = DetallePedidoMapping::ToDetallePedido($dto, $dto->id);
       $detallePedido->setEstado($dto->estado);
       //según estado se llama al método de modificación
       if($dto->estado == Enum_EstadoDetallePedido::EnPreparacion){
         $detallePedido->setInicio(date('Y-m-d H:i:s', time()));
+        $detallePedido->setResponsable($usuarioId);
+       
       } else if($dto->estado == Enum_EstadoDetallePedido::Listo){
         $detallePedido->setFin(date('Y-m-d H:i:s', time()));
+
+        //modifico el estado a listos para servir para que lo vea el mozo
+        
+
+        $pedidoDto = new PedidoDto();
+        $pedidoDto->id = $detallePedido->getPedido();
+        $pedidoDto->estado = Enum_EstadoPedido::ListoParaServir;
+        //  var_dump($pedidoDto->id);
+       //devuelve falso si hay pedidos pendientes
+        if(DetallePedidoDb::TodosPlatosListos($pedidoDto->id))
+        {
+            $pedidoLogic = new PedidoLogic();
+            $pedidoLogic->ModificarEstado($pedidoDto);
+        }
+
+        
       }
       DetallePedidoDb::modifyEstado($detallePedido);
     } else {
@@ -169,9 +180,20 @@ class PedidoLogic
     }
   }
 
+  public function GetDetallePedidoByRol(int $rolUsuario)
+  {
+    $array = DetallePedidoDb::GetPedidoDetalleByRol($rolUsuario);
+    return $array;
+  }  
+
   private function GenerateAlphanumericCode(): string
   {
     $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     return substr(str_shuffle($permitted_chars), 0, 5);
+  }
+
+   public function TodosPlatosListos(int $pedidoId): bool
+  {
+    return DetallePedidoDb::TodosPlatosListos($pedidoId);
   }
 }

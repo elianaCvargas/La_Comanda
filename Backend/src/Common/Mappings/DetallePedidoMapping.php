@@ -17,11 +17,21 @@ class DetallePedidoMapping
         $detallePedidoDto = new DetallePedidoDto();
         if ($modificar) {
             $detallePedidoDto->id  = $obj->id;
+            $detallePedidoDto->estado  = $obj->estado;
+
         }
 
-        $detallePedidoDto->estado  = $obj->estado;
         $detallePedidoDto->puntaje  = $obj->puntaje;
 
+        return $detallePedidoDto;
+    }
+
+    public static function ToDtoParaModificarEstado($data): DetallePedidoDto
+    {
+        $obj = json_decode($data);
+        $detallePedidoDto = new DetallePedidoDto();
+            $detallePedidoDto->id  = $obj->id;
+            $detallePedidoDto->estado  = $obj->estado;
         return $detallePedidoDto;
     }
 
@@ -41,15 +51,16 @@ class DetallePedidoMapping
 
     public static function dbDataToDetallePedido($data): DetallePedido
     {
-        return new DetallePedido(
-            intval($data->id),
-            intval($data->pedido),
-            intval($data->responsable),
-            intval($data->estado),
-            $data->inicio,
-            $data->fin,
-            intval($data->productoId),
-            intval($data->puntaje)
-        );
+        $pedido = new DetallePedido();          
+            $pedido->setId(intval($data->Id));
+            $pedido->setPedido(intval($data->Pedido));
+            $pedido->setResponsable(intval($data->Responsable));
+            $pedido->setEstado(intval($data->Estado));
+            $pedido->setInicio($data->Inicio);
+            $pedido->setFin($data->Fin);
+            $pedido->setProductoId(intval($data->ProductoId));
+            $pedido->setPuntaje(intval($data->Puntaje));
+
+        return $pedido;
     }
 }

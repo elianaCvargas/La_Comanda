@@ -5,6 +5,7 @@ namespace Common\Dto;
 
 class UsuarioCredencialesDto 
 {
+    public $usuarioId;
     public $nombre;
     public $username;
     public $password;

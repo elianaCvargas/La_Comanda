@@ -25,6 +25,8 @@ class DetallePedido
     //     $this->productoId= $productoId;
     //     $this->puntaje= $puntaje;
     // }
+
+
     
     public function getId() {
         return $this->id;

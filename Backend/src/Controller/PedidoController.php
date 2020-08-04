@@ -6,6 +6,7 @@ use Common\Enum\Enum_EstadoMesa;
 use Common\ExceptionManager\ApplicationException;
 use Common\Mappings\PedidoMapping;
 use Common\Mappings\DetallePedidoMapping;
+use Common\Util\AutentificadorJWT;
 use Logic\PedidoLogic;
 use Controller\BaseController;
 use Exception;
@@ -73,9 +74,9 @@ class PedidoController extends BaseController
       }
     } catch (ApplicationException $ae) {
       echo $ae->Message();
-     }catch (Exception $e) {
+    } catch (Exception $e) {
       echo "Algun problema no conocido";
-    } 
+    }
   }
 
   public function ModificarPuntajes($request, $response, $args)
@@ -95,31 +96,38 @@ class PedidoController extends BaseController
       }
     } catch (ApplicationException $ae) {
       echo $ae->Message();
-     }catch (Exception $e) {
+    } catch (Exception $e) {
       echo "Algun problema no conocido";
-    } 
+    }
   }
 
+  //recibo id de detalle pedido y el estado que me traje de la lista
   public function ModificarEstadoDetalle($request, $response, $args)
   {
     try {
-      $datosArray = $request->getParsedBody();
-      if (
-        $this->ValidateModifyRequest($datosArray, "id", ["estado"])
-      ) {
-        $detallePedido = json_encode($datosArray);
-        $detallePedidoDto = DetallePedidoMapping::ToDto($detallePedido, true);
-        $pedidoLogic = new PedidoLogic();
-        $pedidoLogic->ModificarEstadoDetalle($detallePedidoDto);
-        echo "Modificado con exito";
-      } else {
-        echo "Debe definir al menos un campo para modificar e ingresar un id";
+      $tokenData = AutentificadorJWT::getData($request->getHeader('token')[0]);
+      if (!empty($tokenData)) {
+        $datosArray = $request->getParsedBody();
+        if (
+          $this->ValidateModifyRequest($datosArray, "id", ["estado"])
+        ) {
+          $detallePedido = json_encode($datosArray);
+          $detallePedidoDto = DetallePedidoMapping::ToDtoParaModificarEstado($detallePedido);
+          $pedidoLogic = new PedidoLogic();
+          $pedidoLogic->ModificarEstadoDetalle($detallePedidoDto, $tokenData->usuarioId);
+
+          $response->getBody()->write("Estado de detalle modificado con exito");
+          $ok = 201;
+          return $response->withStatus($ok);
+        } else {
+          echo "Debe definir al menos un campo para modificar e ingresar un id";
+        }
       }
     } catch (ApplicationException $ae) {
       echo $ae->Message();
-     }catch (Exception $e) {
+    } catch (Exception $e) {
       echo "Algun problema no conocido";
-    } 
+    }
   }
 
   public function ModificarPuntajeDetalle($request, $response, $args)
@@ -139,9 +147,9 @@ class PedidoController extends BaseController
       }
     } catch (ApplicationException $ae) {
       echo $ae->Message();
-     }catch (Exception $e) {
+    } catch (Exception $e) {
       echo "Algun problema no conocido";
-    } 
+    }
   }
 
   // public function Eliminar($request, $response, $args)

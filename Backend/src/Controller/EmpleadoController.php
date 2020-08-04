@@ -3,12 +3,16 @@
 namespace Controller;
 
 use Common\Dto\UsuarioDto;
+use Common\Enum\Enum_RolesEmpleados;
+use Common\Enum\Enum_RolesUsuarios;
 use Common\Mappings\UsuarioDtoMapping;
 use PHPUnit\Framework\Exception;
 use Common\ExceptionManager\ApplicationException;
+use Common\Util\AutentificadorJWT;
 use Controller\BaseController;
 use Logic\UsuarioLogic;
 use Logic\EmpleadoLogic;
+use Logic\PedidoLogic;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
@@ -107,5 +111,39 @@ class EmpleadoController extends BaseController
     } catch (Exception $e) {
       echo "Algun problema no conocido";
     }
+  }
+
+  public function GetPedidosByRol($request, $response, $args)
+  {
+    try {
+      $tokenData = AutentificadorJWT::getData($request->getHeader('token')[0]);
+      if(!empty($tokenData))
+      {
+        $pedidos = new PedidoLogic();
+        // var_dump($tokenData);
+        $result = $pedidos->GetDetallePedidoByRol($tokenData->rolEmpleado);
+        $response->getBody()->write(json_encode($result));
+        $ok = 201;
+        return $response->withStatus($ok);
+      }
+      
+    } catch (ApplicationException $ae) {
+      $response->getBody()->write($ae->Message());
+      $badrequest = 400;
+      return $response->withStatus($badrequest);
+    } catch (Exception $ex) {
+      $response->getBody()->write($ex->getMessage());
+      $badrequest = 400;
+      return $response->withStatus($badrequest);
+    }
+
+
+    // switch($tokenData->rolEmpleado)
+    // {
+    //   case Enum_RolesEmpleados::Cocinero:
+    //     $pedidos = new PedidoLogic();
+    //     $pedidos->GetDetallePedidoByRol($tokenData->rolEmpleado);
+    //   break;
+    // }
   }
 }

@@ -10,7 +10,7 @@ class AutentificadorJWT
     private static $tipoEncriptacion = ['HS256'];
     private static $aud = null;
     
-    public static function CrearToken($datos)
+    public static function CrearToken($datos, $isEmployee)
     {
         $ahora = time();
         /*
@@ -18,9 +18,10 @@ class AutentificadorJWT
          https://tools.ietf.org/html/rfc7519#section-4.1
          + los que quieras ej="'app'=> "API REST CD 2019" 
         */
+        // var_dump($isEmployee);
         $payload = array(
         	'iat'=>$ahora,
-            'exp' => $ahora + (60 * 30),
+            'exp' => $isEmployee ? $ahora + (60 * 3000) : $ahora + (60 * 3000),
             'aud' => self::Aud(),
             'data' => $datos,
             'app'=> "API REST CD UTN FRA"
@@ -28,6 +29,7 @@ class AutentificadorJWT
         return JWT::encode($payload, self::$claveSecreta);
     }
     
+   
     //usar este para validar  una vez que obtengo el token
 
     public static function VerificarToken($token)
@@ -78,7 +80,6 @@ class AutentificadorJWT
         } 
         catch (Exception $e)
         {
-            //echo "Clave fuera de tiempo";
            throw new Exception("Token expirado");
         }
         

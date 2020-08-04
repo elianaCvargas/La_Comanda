@@ -2,6 +2,7 @@
 
 use App\Middleware\MozoValidation;
 use App\Middleware\SocioValidation;
+use App\Middleware\ResponsableValidation;
 use Slim\App;
 use Controller\EmpleadoController;
 use Controller\SocioController;
@@ -20,6 +21,7 @@ include_once __DIR__ . '/../Controller/FileController.php';
 include_once __DIR__ . '/../Controller/LoginController.php';
 include_once __DIR__ . '/../Middleware/SocioValidation.php';
 include_once __DIR__ . '/../Middleware/MozoValidation.php';
+include_once __DIR__ . '/../Middleware/ResponsableValidation.php';
 
 return function (App $app) {
     $container = $app->getContainer();  
@@ -27,6 +29,8 @@ return function (App $app) {
         $this->put('', EmpleadoController::class . ':Modificar')->add(new SocioValidation());   
         $this->delete('', EmpleadoController::class . ':Eliminar')->add(new SocioValidation());   
         $this->post('', EmpleadoController::class . ':Crear')->add(new SocioValidation());   
+        $this->get('/pendientes', EmpleadoController::class . ':GetPedidosByRol')->add(new ResponsableValidation());   
+        
     });
 
     $app->group('/socio', function ($app) {   
@@ -53,8 +57,8 @@ return function (App $app) {
         $this->post('', PedidoController::class . ':Crear')->add(new MozoValidation());   
         $this->put('/modificarEstado', PedidoController::class . ':ModificarEstado')->add(new MozoValidation());   
         $this->delete('', PedidoController::class . ':Eliminar');    
-          
-        $this->put('/modificarEstadoDetalle', PedidoController::class . ':ModificarEstadoDetalle');
+
+        $this->put('/modificarEstadoDetalle', PedidoController::class . ':ModificarEstadoDetalle')->add(new ResponsableValidation());
         $this->put('/modificarPuntajeDetalle', PedidoController::class . ':ModificarPuntajeDetalle');
         $this->put('/modificarPuntajes', PedidoController::class . ':ModificarPuntajes');   
 

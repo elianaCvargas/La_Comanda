@@ -12,7 +12,7 @@ include_once __DIR__ . '/../../src/Common/Enum/RolesUsuariosEnum.php';
 class Empleado extends Usuario
 {
     private $rolEmpleado;
-    // private $dni;
+    private $pedidosPendientes = [];
     // private $telefono;
     public function __construct($id, $nombre, $apellido, $rolEmpleado, $username, $pasword)
     {
@@ -40,15 +40,15 @@ class Empleado extends Usuario
         return $this->rolEmpleado;
     }
 
-    // public function setDni(int $dni) 
-    // {
-    //     $this->dni = $dni;
-    // }
+    public function setPendientes($pendientes) 
+    {
+        $this->pedidosPendientes = $pendientes;
+    }
 
-    // public function getDni()
-    // {
-    //     return $this->dni;
-    // }
+    public function getPendientes()
+    {
+        return $this->pedidosPendientes;
+    }
 
     // public function setTelefono(int $telefono) 
     // {
